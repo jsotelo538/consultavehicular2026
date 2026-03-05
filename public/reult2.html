@@ -1,0 +1,4196 @@
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consulta Vehicular Integral</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    font-size:16px;
+}
+
+body{
+    font-family:'Inter',sans-serif;
+    background:#ffffff;
+    color:#1f2937;
+}
+
+/* =========================
+   TOP BAR
+========================= */
+
+.topbar{
+    background:#0f172a;
+    color:#cbd5e1;
+    font-size:12px;
+    padding:6px 20px;
+    text-align:center;
+    letter-spacing:.5px;
+}
+
+/* =========================
+   HEADER INSTITUCIONAL PRO
+========================= */
+
+.gov-header-full{
+    background:#ffffff;
+    border-bottom:1px solid #e5e7eb;
+}
+
+.gov-stripe{
+    height:6px;
+    background:linear-gradient(90deg,#1e3a8a,#2563eb,#1e40af);
+}
+
+.gov-container{
+    max-width:1200px;
+    margin:auto;
+    padding:18px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.gov-left{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.escudo{
+    font-size:30px;
+}
+
+.gov-text{
+    display:flex;
+    flex-direction:column;
+    line-height:1.2;
+}
+
+.ministerio{
+    font-weight:600;
+    font-size:14px;
+    color:#111827;
+}
+
+.sistema{
+    font-size:12px;
+    color:#6b7280;
+}
+
+.gov-right{
+    font-size:12px;
+    color:#6b7280;
+}
+
+/* TÍTULO INTEGRADO */
+
+.main-title{
+    background:#f8fafc;
+    border-top:1px solid #e5e7eb;
+    border-bottom:1px solid #e5e7eb;
+    text-align:center;
+    font-size:20px;
+    font-weight:600;
+    padding:18px 15px;
+    letter-spacing:.5px;
+    color:#1e3a8a;
+}
+
+/* =========================
+   SECCIÓN SERVICIO
+========================= */
+
+.section-service{
+    background:#eef2f7;
+    padding:70px 20px;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.main-card{
+    background:white;
+    padding:50px;
+    border-radius:24px;
+    box-shadow:0 30px 60px rgba(0,0,0,.05);
+}
+
+/* =========================
+   BUSCADOR
+========================= */
+
+.search-box{
+    display:flex;
+    gap:15px;
+    margin-bottom:30px;
+}
+
+.search-box input{
+    flex:1;
+    height:55px;
+    border:1px solid #d1d5db;
+    border-radius:14px;
+    padding:0 18px;
+    font-size:15px;
+}
+
+.search-box input:focus{
+    outline:none;
+    border-color:#2563eb;
+}
+
+.btn-primary{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:0 30px;
+    border-radius:14px;
+    font-weight:500;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.btn-primary:hover{
+    background:#1d4ed8;
+}
+
+/* =========================
+   BOTONES SECUNDARIOS
+========================= */
+
+.actions{
+    display:flex;
+    gap:15px;
+    margin-bottom:35px;
+}
+
+.btn-secondary{
+    background:#111827;
+    color:white;
+    padding:12px 22px;
+    border-radius:12px;
+    border:none;
+    cursor:pointer;
+}
+
+.btn-outline{
+    border:1px solid #d1d5db;
+    background:transparent;
+    padding:12px 22px;
+    border-radius:12px;
+    cursor:pointer;
+}
+
+/* =========================
+   ESTADOS
+========================= */
+
+.status-row{
+    display:flex;
+    gap:15px;
+    margin-bottom:35px;
+    flex-wrap:wrap;
+}
+
+.status-item{
+    padding:10px 18px;
+    border-radius:30px;
+    font-size:13px;
+    font-weight:500;
+}
+
+.success{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.warning{
+    background:#fef9c3;
+    color:#92400e;
+}
+
+/* =========================
+   RESULTADOS
+========================= */
+
+.result-card{
+    background:#f9fafb;
+    padding:18px;
+ 
+  margin-bottom:25px;   /* 👈 ESTA ES LA SEPARACIÓN */
+  border-radius:16px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.06);
+
+}
+
+.result-card h3{
+    margin-bottom:25px;
+    font-size:18px;
+}
+
+.result-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:25px;
+}
+
+.result-grid span{
+    font-size:12px;
+    color:#6b7280;
+}
+
+.result-grid strong{
+    display:block;
+    margin-top:6px;
+    font-weight:600;
+}
+
+.text-success{
+    color:#16a34a;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:768px){
+
+    html{font-size:14px;}
+ 
+    .gov-container{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
+    }
+
+    .gov-right{
+        align-self:flex-end;
+    }
+
+    .main-title{
+        font-size:18px;
+        padding:16px 10px;
+    }
+
+    .search-box{
+        flex-direction:column;
+    }
+
+    .btn-primary{
+        width:100%;
+        height:50px;
+    }
+
+    .actions{
+        flex-direction:column;
+    }
+
+    .actions button{
+        width:100%;
+    }
+
+    .status-row{
+        display:grid;
+        grid-template-columns:1fr;
+    }
+
+    .result-grid{
+        grid-template-columns:1fr;
+    }
+
+    .main-card{
+        padding:30px;
+        border-radius:18px;
+    }
+
+    .section-service{
+        padding:40px 15px;
+    }
+     input{
+   padding: 18px !important;
+ }
+}
+
+
+.mensaje-info{
+    background:#f1f5f9;
+    padding:15px;
+    border-radius:12px;
+    font-size:14px;
+    color:#475569;
+}
+
+.text-danger{
+    color:#dc2626;
+}
+.btn-primary{
+    position:relative;
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:0 30px;
+    border-radius:14px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.2s;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    height:55px;
+    min-width:150px;
+}
+
+.btn-primary:disabled{
+    opacity:.7;
+    cursor:not-allowed;
+}
+
+.btn-primary:hover:not(:disabled){
+    background:#1d4ed8;
+}
+
+/* Spinner */
+
+.btn-loader{
+    width:18px;
+    height:18px;
+    border:2px solid rgba(255,255,255,.4);
+    border-top:2px solid white;
+    border-radius:50%;
+    animation:spin .8s linear infinite;
+    display:none;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg);}
+}
+.titulo-seccion{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    background:linear-gradient(135deg, #1e293b, #334155);
+    padding:20px;
+    border-radius:14px;
+    color:white;
+    margin-top:40px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.08);
+}
+
+.titulo-seccion h2{
+    margin:0;
+    font-size:20px;
+    font-weight:600;
+}
+
+.titulo-seccion span{
+    font-size:14px;
+    opacity:0.85;
+}
+
+.titulo-icono{
+    font-size:28px;
+    background:rgba(255,255,255,0.15);
+    padding:12px;
+    border-radius:12px;
+}
+.tabla-container{
+    overflow-x:auto;
+}
+
+.tabla-sat{
+    width:100%;
+    border-collapse:collapse;
+    font-size:14px;
+    background:white;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.tabla-sat thead{
+    background:#0f172a;
+    color:white;
+}
+
+.tabla-sat th{
+    padding:12px 10px;
+    text-align:left;
+    font-weight:600;
+    white-space:nowrap;
+}
+
+.tabla-sat td{
+    padding:10px;
+    border-bottom:1px solid #e5e7eb;
+    white-space:nowrap;
+}
+
+.tabla-sat tbody tr:nth-child(even){
+    background:#f8fafc;
+}
+
+.tabla-sat tbody tr:hover{
+    background:#e2e8f0;
+    transition:0.2s;
+}
+
+.text-right{
+    text-align:right;
+}
+
+.text-center{
+    text-align:center;
+}
+.tabla-container{
+    width: 100%;
+    overflow-x:visible;
+   
+}
+/* SOLO EN MÓVIL PERMITIMOS SCROLL */
+@media(max-width:768px){
+
+    /* Hacemos que la tarjeta use más espacio lateral */
+    #resultadoLima .result-card,
+     #resultado-arequipa .result-card,
+      #resultado-tarapoto .result-card,
+       #resultado-huancayo .result-card,
+        #resultado-chiclayo .result-card,
+        #resultado-huanuco .result-card,
+        #resultado-cusco .result-card,
+        #resultado-ica .result-card,
+         #resultado-chachapoyas .result-card,
+          #resultado-puno .result-card,
+           #resultado-andahuaylas .result-card,
+            #resultado-tacna .result-card,
+              #resultado-cajamarca .result-card,
+    #resultadoCallao .result-card{
+        margin-left:-40px;
+        margin-right:-40px;
+        border-radius:14px;
+    }
+     
+    /* Permitimos que la tabla se expanda más */
+    #resultadoLima .tabla-sat,
+    #resultadoCallao .tabla-sat{
+        min-width:900px;   /* antes era 650 o 900 */
+    }
+
+    #resultadoLima .tabla-container,
+    #resultadoCallao .tabla-container{
+        overflow-x:auto;
+        -webkit-overflow-scrolling:touch;
+    }
+
+}
+
+.success-card{
+  border-left: 6px solid #22c55e;
+}
+
+.success-box{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  background:#ecfdf5;
+  padding:18px;
+  border-radius:12px;
+
+}
+
+.icono-check{
+  background:#22c55e;
+  color:white;
+  width:40px;
+  height:40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  font-weight:bold;
+  font-size:18px;
+}
+/* TARJETA ROJA */
+.danger-card{
+  border-left: 6px solid #dc2626;
+}
+
+/* CAJA SUPERIOR ROJA */
+.danger-box{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  background:#fef2f2;
+  padding:18px;
+  border-radius:12px;
+  margin-bottom:15px;
+}
+
+/* ICONO ROJO */
+.icono-alerta{
+  background:#dc2626;
+  color:white;
+  width:42px;
+  height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  font-size:18px;
+  font-weight:bold;
+}
+  .card {
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .table thead {
+      background-color: #0d6efd;
+      color: white;
+    }
+    .badge-estado {
+      font-size: 0.85rem;
+      padding: 6px 10px;
+      border-radius: 8px;
+    }
+    
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+Portal Oficial del Estado • Servicios Digitales Nacionales
+</div>
+
+<header class="gov-header-full">
+
+    <div class="gov-stripe"></div>
+
+    <div class="gov-container">
+
+        <div class="gov-left">
+            <div class="escudo">🏛</div>
+            <div class="gov-text">
+                <div class="ministerio">
+                    Ministerio de Transporte y Seguridad Vial
+                </div>
+                <div class="sistema">
+                    Plataforma Oficial del Estado
+                </div>
+            </div>
+        </div>
+
+        <div class="gov-right">
+            Sistema Digital 2025 • Conexión Segura
+        </div>
+
+    </div>
+
+    <div class="main-title">
+        CONSULTA VEHICULAR INTEGRAL
+    </div>
+
+</header>
+
+<section class="section-service">
+<div class="container">
+
+    <div class="main-card">
+<div class="search-box">
+    <input type="text" id="placaInput" placeholder="Ingresar placa (Ej: AVS047)">
+
+    <button class="btn-primary" id="btnConsultar">
+        <span class="btn-text">Consultar</span>
+        <span class="btn-loader"></span>
+    </button>
+</div>
+   
+        <div class="actions">
+          <button id="btnReporte"
+        style="display:none"
+        class="btn btn-success mt-3"
+        onclick="generarReporte()">
+    📄 Generar Reporte
+</button>
+           
+            <button class="btn-outline">Compartir</button>
+        </div>
+
+        <div class="status-row">
+            <div class="status-item success">SOAT Vigente</div>
+            <div class="status-item success">Revisión Vigente</div>
+            <div class="status-item warning">Multas Pendientes</div>
+        </div>
+      
+        <div id="soat-vehiculo" style="display:none; margin-top:40px;">
+
+       <div id="soat-info" class="result-card" style="margin-bottom:30px;"></div>
+
+       <div id="vehiculo-info" class="result-card"></div>
+
+        </div>
+        <div id="resultadoSiniestro" class="result-card" style="margin-top:30px;"></div>
+        <div id="resultadoSutran" class="result-card" style="margin-top:30px;"></div>
+        <div id="resultadoOrdenCaptura" class="result-card" style="margin-top:30px;"></div>
+        <div id="resultadoRevision" class="result-card" style="margin-top:30px;"></div>
+        <div id="resultadoImpuesto" class="result-card" style="margin-top:30px;"></div>
+        <div id="resultadoATU" class="result-card" style="margin-top:30px;"></div>
+        <div id="resultadoInfogas" class="result-card" style="margin-top:30px;"></div>
+      
+        <div class="titulo-seccion">
+    <div class="titulo-icono">📝</div>
+    <div>
+        <h2>Registro Oficial de Papeletas</h2>
+        <span>Consulta consolidada de infracciones vehiculares</span>
+    </div>
+</div>
+
+  <div id="resultadoLima" class="result-card" style="margin-top:30px;"></div>
+<div id="resultadoCallao" class="result-card" style="margin-top:30px;"></div>
+<div id="resultado-arequipa" class="result-card" style="margin-top:30px;"></div>
+<div id="resultado-tarapoto" class="result-card" style="margin-top:30px;"></div>
+<div id="resultado-huancayo" class="result-card" style="margin-top:30px;"></div>
+ <div id="resultado-chiclayo" class="result-card" style="margin-top:30px;"></div>
+ <div id="resultado-huanuco" class="result-card" style="margin-top:30px;"></div>
+ <div id="resultado-cajamarca" class="result-card" style="margin-top:30px;"></div>
+ <div id="resultado-cusco" class="result-card" style="margin-top:30px;"></div>
+ <div id="resultado-ica" class="result-card" style="margin-top:30px;"></div>
+ <div id="resultado-andahuaylas" class="result-card" style="margin-top:30px;"></div>
+  <div id="resultado-chachapoyas" class="result-card" style="margin-top:30px;"></div>
+ <div id="resultado-puno" class="result-card" style="margin-top:30px;"></div>
+ <div id="resultado-tacna" class="result-card" style="margin-top:30px;"></div>
+      <div class="titulo-seccion">
+    <div class="titulo-icono">📝</div>
+    <div>
+        <h2>Foto PIT</h2>
+        <span>Estados de cuentas</span>
+    </div>
+</div>
+   <div id="mensaje" class="text-center mb-3" style="margin-top:30px;"></div>
+    
+   
+      
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered align-middle d-none" id="tablaResultados">
+        <thead>
+          <tr>
+            <th>Placa</th>
+            <th>Documento</th>
+            <th>Fecha</th>
+            <th>Total</th>
+            <th>Estado</th>
+            <th>Falta</th>
+            <th>Licencia</th>
+            <th>Evidencia</th>
+          </tr>
+        </thead>
+        <tbody id="cuerpoTabla"></tbody>
+      </table>
+    </div>
+
+     <div class="titulo-seccion">
+    <div class="titulo-icono">📝</div>
+    <div>
+        <h2>Lunas Polarizadas</h2>
+        <span>Consulta de Permiso </span>
+    </div>
+</div>
+      <!-- 🔥 DIV DONDE SALDRÁ EL RESULTADO -->
+    <div id="resultadosConsultas" class="mt-8"></div>
+ </div>
+  </div>
+
+ 
+</section>
+<script>
+
+const btn = document.getElementById("btnConsultar");
+const btnText = btn.querySelector(".btn-text");
+const btnLoader = btn.querySelector(".btn-loader");
+
+btn.addEventListener("click", consultarTodo);
+let reporteGeneral = {};
+ 
+let consultaRealizada = false;
+
+async function consultarTodo(){
+
+   if(consultaRealizada){
+    alert("⚠️ Ya realizaste una consulta. Serás redirigido al inicio.");
+    window.location.href = "https://consultavehicular.services/";
+    return;
+}
+
+    const placa = document
+        .getElementById("placaInput")
+        .value.trim()
+        .toUpperCase();
+
+    if(!placa){
+        alert("Ingrese una placa válida");
+        return;
+    }
+
+    consultaRealizada = true; // 🔥 Bloqueamos futuras consultas
+
+    activarLoader(true);
+
+    try{
+
+        const resultados = await Promise.allSettled([
+            consultarSOATyVehiculo(placa),
+            consultarSiniestro(placa),
+            consultarSutran(placa),
+            consultarOrdenCaptura(placa),
+            consultarRevisionTecnica(placa),
+            consultarImpuestoVehicular(placa),
+            consultarInfogas(placa),
+            consultarATU(placa),
+            consultarSATLima(placa),      
+            consultarSATCallao(placa),
+            consultarequipa(placa),
+            consultarSatProvincias(placa),
+            consultarSATChiclayo(placa),
+            consultarSATHuanuco(placa),
+            consultarSATCajamarca(placa),
+            consultarSATCusco(placa),
+            consultarSATIca(placa),
+            consultarSATAndahuaylas(placa),
+            consultarSATChachapoyas(placa),
+            consultarSATPuno(placa),
+            consultarSATTacna(placa),
+            consultarPITo(placa),
+            consultarLunas(placa),
+        ]);
+
+        reporteGeneral = {
+            placa,
+            fechaConsulta: new Date().toLocaleString(),
+            resultados: resultados.map((r, index) => ({
+                modulo: index + 1,
+                estado: r.status,
+                data: r.status === "fulfilled" ? r.value : r.reason
+            }))
+        };
+
+        const btn = document.getElementById("btnReporte");
+        if(btn){
+            btn.style.display = "inline-block";
+        }
+
+        // 🔥 Mostrar botón para volver al inicio
+        mostrarBotonInicio();
+
+    }catch(error){
+        console.error(error);
+    }
+
+    activarLoader(false);
+}
+
+function activarLoader(estado){
+    if(estado){
+        btnText.style.display = "none";
+        btnLoader.style.display = "inline-block";
+        btn.disabled = true;
+    }else{
+        btnText.style.display = "inline";
+        btnLoader.style.display = "none";
+        btn.disabled = false;
+    }
+}
+
+/* ===============================
+   SOAT + VEHICULO
+================================ */
+
+async function consultarSOATyVehiculo(placa){
+
+    const soatCont = document.getElementById("soat-info");
+    const vehiculoCont = document.getElementById("vehiculo-info");
+    document.getElementById("soat-vehiculo").style.display = "block";
+
+    soatCont.innerHTML = `
+        <h3>🛡️ Información del SOAT</h3>
+        <div class="mensaje-info">⏳ Consultando información oficial...</div>
+    `;
+
+    vehiculoCont.innerHTML = `
+        <h3>🚗 Información Técnica del Vehículo</h3>
+        <div class="mensaje-info">⏳ Consultando datos técnicos...</div>
+    `;
+
+    const token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzODkyMiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6ImNvbnN1bHRvciJ9.kcxt3XYtXWWgNZdMnaENUZj-568RMkDRAVqV-DRk73I";
+
+    try{
+
+        const [soatRes, infoRes] = await Promise.all([
+            fetch(`https://api.factiliza.com/v1/placa/soat/${placa}`,{
+                headers:{Authorization:token}
+            }).then(r=>r.json()),
+
+            fetch(`https://api.factiliza.com/v1/placa/info/${placa}`,{
+                headers:{Authorization:token}
+            }).then(r=>r.json())
+        ]);
+
+        const soat = soatRes.data;
+        const info = infoRes.data;
+
+        if(soat && soat.placa){
+
+            const estadoClase = soat.estado === "VIGENTE" ? "text-success" : "text-danger";
+
+            soatCont.innerHTML = `
+                <h3>🛡️ Información del SOAT</h3>
+                <div class="result-grid">
+                    <div><span>Placa</span><strong>${soat.placa}</strong></div>
+                    <div><span>Aseguradora</span><strong>${soat.nombre_compania}</strong></div>
+                    <div><span>Inicio</span><strong>${soat.fecha_inicio}</strong></div>
+                    <div><span>Fin</span><strong>${soat.fecha_fin}</strong></div>
+                    <div><span>Estado</span><strong class="${estadoClase}">${soat.estado}</strong></div>
+                    <div><span>N° Póliza</span><strong>${soat.numero_poliza}</strong></div>
+                </div>
+            `;
+        }else{
+            soatCont.innerHTML = `
+                <h3>🛡️ Información del SOAT</h3>
+                <div class="mensaje-info">No se encontró información.</div>
+            `;
+        }
+
+        if(info && info.placa){
+
+            vehiculoCont.innerHTML = `
+                <h3>🚗 Información Técnica del Vehículo</h3>
+                <div class="result-grid">
+                    <div><span>Placa</span><strong>${info.placa}</strong></div>
+                    <div><span>Marca</span><strong>${info.marca}</strong></div>
+                    <div><span>Modelo</span><strong>${info.modelo}</strong></div>
+                    <div><span>Color</span><strong>${info.color}</strong></div>
+                    <div><span>Serie</span><strong>${info.serie}</strong></div>
+                    <div><span>Motor</span><strong>${info.motor}</strong></div>
+                    <div><span>VIN</span><strong>${info.vin}</strong></div>
+                </div>
+            `;
+        }else{
+            vehiculoCont.innerHTML = `
+                <h3>🚗 Información Técnica del Vehículo</h3>
+                <div class="mensaje-info">No se encontró información técnica.</div>
+            `;
+        }
+      return {
+    soat: soat || null,
+    vehiculo: info || null
+};
+    }catch(error){
+        soatCont.innerHTML = `<div class="mensaje-info text-danger">Error en consulta SOAT</div>`;
+        vehiculoCont.innerHTML = `<div class="mensaje-info text-danger">Error en consulta Vehículo</div>`;
+    }
+}
+
+/* ===============================
+   SBS
+================================ */
+let resultadoSiniestroGlobal = null;
+let resultadoSutranGlobal = null;
+let resultadoOrdenCapturaGlobal = null;
+
+
+let resultadoRevisionGlobal = null;
+let resultadoImpuestoGlobal = null;
+let resultadoInfogasGlobal = null;
+
+let resultadoATUGlobal = null;
+let resultadoLimaGlobal = null;
+let resultadoCallaoGlobal = null;
+let resultadoArequipaGlobal = null;
+let resultadoTarapotoGlobal = null;
+let resultadoHuancayoGlobal = null;
+let resultadoChiclayoGlobal = null;
+let resultadoHuanucoGlobal = null;
+let resultadoCajamarcaGlobal = null;
+let resultadoCuscoGlobal = null;
+let resultadoIcaGlobal = null;
+let resultadoAndahuaylasGlobal = null;
+let resultadoChachapoyasGlobal = null;
+let resultadoPunoGlobal = null;
+let resultadoTacnaGlobal = null;
+let resultadoPITGlobal = null;
+let resultadoLunasGlobal = null;
+async function consultarSiniestro(placa){
+
+    const cont = document.getElementById("resultadoSiniestro");
+
+    cont.innerHTML = `
+        <h3>🚧 Reporte SBS (Siniestros)</h3>
+        <div class="mensaje-info">Consultando...</div>
+    `;
+
+    try{
+
+        const res = await fetch('/siniestro',{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({placa})
+        });
+
+        const data = await res.json();
+resultadoSiniestroGlobal = data.resultado || null;
+
+        if(data.resultado){
+            const r = data.resultado;
+            cont.innerHTML = `
+                <h3>🚧 Reporte SBS (Siniestros)</h3>
+                <div class="result-grid">
+                    <div><span>Placa</span><strong>${r.placa}</strong></div>
+                    <div><span>Consulta</span><strong>${r.fechaConsulta}</strong></div>
+                    <div><span>Actualizado</span><strong>${r.actualizadoA}</strong></div>
+                    <div><span>Accidentes</span><strong>${r.cantidadAccidentes}</strong></div>
+                </div>
+            `;
+        }else{
+            cont.innerHTML = `<div class="mensaje-info">Sin información en SBS.</div>`;
+        }
+
+    }catch{
+        cont.innerHTML = `<div class="mensaje-info text-danger">Error en SBS</div>`;
+    }
+}
+
+/* ===============================
+   SUTRAN
+================================ */
+
+async function consultarSutran(placa){
+
+    const cont = document.getElementById("resultadoSutran");
+
+    cont.innerHTML = `
+        <h3>🚌 Infracciones SUTRAN</h3>
+        <div class="mensaje-info">Consultando...</div>
+    `;
+
+    try{
+
+        const res = await fetch('/consultar',{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({placa})
+        });
+
+        const data = await res.json();
+       resultadoSutranGlobal = data.resultado || null;
+        cont.innerHTML = `
+            <h3>🚌 Infracciones SUTRAN</h3>
+            <div class="mensaje-info">${data.resultado || "Sin registros."}</div>
+        `;
+
+    }catch{
+        cont.innerHTML = `<div class="mensaje-info text-danger">Error en SUTRAN</div>`;
+    }
+}
+
+/* ===============================
+   ORDEN CAPTURA
+================================ */
+
+async function consultarOrdenCaptura(placa){
+
+    const cont = document.getElementById("resultadoOrdenCaptura");
+
+    cont.innerHTML = `
+        <h3>🛑 Órdenes de Captura</h3>
+        <div class="mensaje-info">Consultando...</div>
+    `;
+
+    try{
+resultadoOrdenCapturaGlobal = null;
+        const res = await fetch('/orden-captura',{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({placa})
+        });
+
+        const data = await res.json();
+if(Array.isArray(data.resultado) && data.resultado.length > 0){
+    resultadoOrdenCapturaGlobal = data.resultado;
+}else{
+    resultadoOrdenCapturaGlobal = [];
+}
+        if(Array.isArray(data.resultado) && data.resultado.length>0){
+
+            const filas = data.resultado.map(r=>`
+                <tr>
+                    <td>${r.documento}</td>
+                    <td>${r.anio || "-"}</td>
+                    <td>${r.concepto}</td>
+                    <td>${r.monto}</td>
+                </tr>
+            `).join("");
+
+            cont.innerHTML = `
+                <h3>🛑 Órdenes de Captura</h3>
+                <table style="width:100%;border-collapse:collapse;margin-top:15px;">
+                    <thead style="background:#f1f5f9;">
+                        <tr>
+                            <th style="padding:8px;border:1px solid #e5e7eb;">Documento</th>
+                            <th style="padding:8px;border:1px solid #e5e7eb;">Año</th>
+                            <th style="padding:8px;border:1px solid #e5e7eb;">Concepto</th>
+                            <th style="padding:8px;border:1px solid #e5e7eb;">Monto</th>
+                        </tr>
+                    </thead>
+                    <tbody>${filas}</tbody>
+                </table>
+            `;
+        }else{  
+            cont.innerHTML = ` <h3>🛑 Órdenes de Captura</h3><br><div class="mensaje-info">No registra órdenes.</div>`;
+        }
+
+    }catch{
+        cont.innerHTML = `<div class="mensaje-info text-danger">Error en Orden de Captura</div>`;
+    }
+}
+
+/* ===============================
+   REVISION TECNICA
+================================ */
+async function consultarRevisionTecnica(placa){
+
+    const cont = document.getElementById("resultadoRevision");
+
+    cont.innerHTML = `
+        <h3>🔧 Revisión Técnica (MTC)</h3>
+        <div class="mensaje-info">⏳ Consultando información oficial...</div>
+    `;
+
+    try{
+
+        const res = await fetch("/api/consultar-revision",{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({placa})
+        });
+
+        const data = await res.json();
+        resultadoRevisionGlobal = null;
+        if(data.error || !data.resultados || data.resultados.length === 0){
+
+            cont.innerHTML = `
+                <h3>🔧 Revisión Técnica (MTC)</h3>
+                <div class="mensaje-info">No se encontró información registrada.</div>
+            `;
+            return;
+        }
+
+        const r = data.resultados[0];
+        resultadoRevisionGlobal = r;
+        const estadoClase =
+            (r.resultado || "").toLowerCase().includes("aprobado")
+            ? "text-success"
+            : "text-danger";
+
+        cont.innerHTML = `
+            <h3>🔧 Revisión Técnica (MTC)</h3>
+            <div class="result-grid">
+                <div>
+                    <span>Placa</span>
+                    <strong>${r.placa || "-"}</strong>
+                </div>
+                <div>
+                    <span>Certificado</span>
+                    <strong>${r.certificado || "-"}</strong>
+                </div>
+                <div>
+                    <span>Fecha Revisión</span>
+                    <strong>${r.fechaRevision || "-"}</strong>
+                </div>
+                <div>
+                    <span>Vencimiento</span>
+                    <strong>${r.fechaVencimiento || "-"}</strong>
+                </div>
+                <div>
+                    <span>Resultado</span>
+                    <strong class="${estadoClase}">
+                        ${r.resultado || "-"}
+                    </strong>
+                </div>
+                <div>
+                    <span>Planta</span>
+                    <strong>${r.planta || "-"}</strong>
+                </div>
+            </div>
+        `;
+
+    }catch(error){
+
+        cont.innerHTML = `
+            <h3>🔧 Revisión Técnica (MTC)</h3>
+            <div class="mensaje-info text-danger">
+                Error al consultar revisión técnica.
+            </div>
+        `;
+
+        console.error(error);
+    }
+}
+
+/* ===============================
+   IMPUESTO VEHICULAR
+================================ */
+async function consultarImpuestoVehicular(placa){
+
+    const cont = document.getElementById("resultadoImpuesto");
+
+    cont.innerHTML = `
+        <h3>🚘 Impuesto Vehicular (SAT)</h3>
+        <div class="mensaje-info">⏳ Consultando deuda tributaria...</div>
+    `;
+
+    try{
+resultadoImpuestoGlobal = null;
+        const res = await fetch("https://www.consultavehicular.services/consultarr",{
+            method:"POST",
+            headers:{ "Content-Type":"application/json" },
+            body:JSON.stringify({ placa })
+        });
+
+        const data = await res.json();
+        resultadoImpuestoGlobal = null;
+        if(!data || !data.total){
+resultadoImpuestoGlobal = [];
+            cont.innerHTML = `
+                <h3>🚘 Impuesto Vehicular (SAT)</h3>
+                <div class="mensaje-info">No registra deuda pendiente.</div>
+            `;
+            return;
+        }
+
+        const filas = (data.detalle || []).map(d=>`
+            <tr>
+                <td>${d.falta || "-"}</td>
+                <td>${d.documento || "-"}</td>
+                <td>${d.fecha || "-"}</td>
+                <td>${d.estado || "-"}</td>
+                <td>S/ ${d.monto || "0.00"}</td>
+            </tr>
+        `).join("");
+      resultadoImpuestoGlobal = {
+    placa: data.placa || placa,
+    total: data.total,
+    detalle: data.detalle || []
+};
+        cont.innerHTML = `
+            <h3>🚘 Impuesto Vehicular (SAT)</h3>
+
+            <div class="result-grid" style="margin-bottom:20px;">
+                <div>
+                    <span>Placa</span>
+                    <strong>${data.placa || placa}</strong>
+                </div>
+                <div>
+                    <span>Deuda Total</span>
+                    <strong class="text-danger">${data.total}</strong>
+                </div>
+            </div>
+
+            <div style="overflow-x:auto;">
+                <table style="width:100%;border-collapse:collapse;">
+                    <thead style="background:#f1f5f9;">
+                        <tr>
+                            <th style="padding:8px;border:1px solid #e5e7eb;">Falta</th>
+                            <th style="padding:8px;border:1px solid #e5e7eb;">Documento</th>
+                            <th style="padding:8px;border:1px solid #e5e7eb;">Fecha</th>
+                            <th style="padding:8px;border:1px solid #e5e7eb;">Estado</th>
+                            <th style="padding:8px;border:1px solid #e5e7eb;">Monto</th>
+                        </tr>
+                    </thead>
+                    <tbody>${filas}</tbody>
+                </table>
+            </div>
+        `;
+
+    }catch(error){
+
+       cont.innerHTML = `
+                <h3>🚘 Impuesto Vehicular (SAT)</h3>
+                <div class="mensaje-info">No registra deuda pendiente.</div>
+            `;
+            return;
+    }
+}
+
+
+/* ===============================
+   INFO GAS
+================================ */
+
+async function consultarInfogas(placa){
+
+    const cont = document.getElementById("resultadoInfogas");
+
+    cont.innerHTML = `
+        <h3>⛽ Infogas GNV</h3>
+        <div class="mensaje-info">⏳ Consultando registro energético...</div>
+    `;
+
+    try{
+
+        const res = await fetch("/api/consultar-infogas",{
+            method:"POST",
+            headers:{ "Content-Type":"application/json" },
+            body:JSON.stringify({ placa })
+        });
+
+        const data = await res.json();
+        resultadoInfogasGlobal = null;
+        if(!data.success || !data.resultados){
+
+            cont.innerHTML = `
+                <h3>⛽ Infogas GNV</h3>
+                <div class="mensaje-info">No registra información en Infogas.</div>
+            `;
+            return;
+        }
+
+        const r = data.resultados;
+       resultadoInfogasGlobal = r;
+        cont.innerHTML = `
+            <h3>⛽ Infogas GNV</h3>
+            <div class="result-grid">
+                <div><span>Placa</span><strong>${placa}</strong></div>
+                <div><span>Tipo Combustible</span><strong>${r.tipoCombustible || "-"}</strong></div>
+                <div><span>Habilitado</span><strong>${r.habilitado || "-"}</strong></div>
+                <div><span>Tiene Crédito</span><strong>${r.tieneCredito || "-"}</strong></div>
+                <div><span>Venc. Revisión Anual</span><strong>${r.vencimientoRevisionAnual || "-"}</strong></div>
+                <div><span>Venc. Cilindro</span><strong>${r.vencimientoCilindro || "-"}</strong></div>
+            </div>
+        `;
+
+    }catch(error){
+
+        cont.innerHTML = `
+            <h3>⛽ Infogas GNV</h3>
+            <div class="mensaje-info text-danger">Error al consultar Infogas.</div>
+        `;
+
+        console.error(error);
+    }
+}
+
+/* ===============================
+   ATUN
+================================ */
+async function consultarATU(placa){
+
+    const cont = document.getElementById("resultadoATU");
+
+    cont.innerHTML = `
+        <h3>🚌 Consulta ATU</h3>
+        <div class="mensaje-info">⏳ Consultando autorización de transporte...</div>
+    `;
+
+    try{
+
+        const res = await fetch("/api/atu",{
+            method:"POST",
+            headers:{ "Content-Type":"application/json" },
+            body:JSON.stringify({ placa })
+        });
+
+        const data = await res.json();
+         
+        if(!data.registrado){
+            resultadoATUGlobal = null;
+             
+            cont.innerHTML = `
+                <h3>🚌 Consulta ATU</h3>
+                <div class="mensaje-info">${data.mensaje || "Placa no registrada en ATU."}</div>
+            `;
+            return;
+        }
+        resultadoATUGlobal = data;
+        cont.innerHTML = `
+            <h3>🚌 Consulta ATU</h3>
+            <div class="result-grid">
+                <div><span>Placa</span><strong>${data.vehiculo.placa}</strong></div>
+                <div><span>Modalidad</span><strong>${data.vehiculo.modalidad}</strong></div>
+                <div><span>Marca</span><strong>${data.vehiculo.marca}</strong></div>
+                <div><span>Modelo</span><strong>${data.vehiculo.modelo}</strong></div>
+                <div><span>Estado</span><strong>${data.vehiculo.estado}</strong></div>
+                <div><span>Circulación</span><strong>${data.vehiculo.circulacion}</strong></div>
+                <div><span>Constancia</span><strong>${data.tarjeta.numero}</strong></div>
+                <div><span>Vencimiento</span><strong>${data.tarjeta.fecha_vencimiento}</strong></div>
+                <div><span>Titular</span><strong>${data.titular.nombre}</strong></div>
+                <div><span>Ruta</span><strong>${data.titular.ruta}</strong></div>
+            </div>
+        `;
+
+    }catch(error){
+
+        cont.innerHTML = `
+            <h3>🚌 Consulta ATU</h3>
+            <div class="mensaje-info text-danger">Error al consultar ATU.</div>
+        `;
+
+        console.error(error);
+    }
+}
+
+/* ===============================
+   PAPELETAS LIMA
+================================ */
+async function consultarSATLima(placa){
+
+    const cont = document.getElementById("resultadoLima");
+
+    // ⏳ Estado cargando
+    cont.innerHTML = `
+        <div class="result-card">
+            <h3>🏙️ SAT Lima</h3>
+            <div class="mensaje-info">⏳ Consultando papeletas...</div>
+        </div>
+    `;
+
+    try{
+
+        const res = await fetch("/api/consultar-lima",{
+            method:"POST",
+            headers:{ "Content-Type":"application/json" },
+            body:JSON.stringify({ placa })
+        });
+
+        const data = await res.json();
+        resultadoLimaGlobal = null;
+        // ❌ Error backend
+        if(!data.success){
+            cont.innerHTML = `
+                <div class="result-card">
+                    <h3>🏙️ SAT Lima</h3>
+                    <div class="mensaje-info text-danger">
+                        ❌ Error al consultar.
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        const registros = data.results || [];
+         resultadoLimaGlobal = registros;
+        // 🟢 SIN PAPELETAS
+        if(registros.length === 0){
+            resultadoLimaGlobal = [];
+            cont.innerHTML = `
+                <div class="result-card success-card">
+                    <h3>🏙️ SAT Lima</h3>
+                    <div class="success-box">
+                        <div class="icono-check">✔</div>
+                        <div>
+                            <strong>Sin papeletas registradas</strong>
+                            <p>La placa ${placa} no presenta infracciones en Lima.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        // 🔴 CON PAPELETAS
+        let totalGeneral = 0;
+
+        const filas = registros.map(r => {
+
+            const deuda = parseFloat(
+                (r.Deuda || "0")
+                    .toString()
+                    .replace("S/", "")
+                    .replace(",", "")
+                    .trim()
+            );
+
+            if(!isNaN(deuda)) totalGeneral += deuda;
+
+            return `
+                <tr>
+                    <td>${r.Placa || "-"}</td>
+                    <td>${r.Reglamento || "-"}</td>
+                    <td>${r.Falta || "-"}</td>
+                    <td>${r.Documento || "-"}</td>
+                    <td>${r.FechaInfraccion || "-"}</td>
+                    <td class="text-right">${r.Importe || "0.00"}</td>
+                    <td class="text-right">${r.Gastos || "0.00"}</td>
+                    <td class="text-right">${r.Descuentos || "0.00"}</td>
+                    <td class="text-right">${r.Deuda || "0.00"}</td>
+                    <td class="text-center">${r.Estado || "-"}</td>
+                </tr>
+            `;
+        }).join("");
+
+        cont.innerHTML = `
+            <div class="result-card danger-card">
+                <h3>🏙️ SAT Lima</h3>
+
+                <div class="danger-box">
+                    <div class="icono-alerta">⚠</div>
+                    <div>
+                        <strong>${registros.length} papeleta(s) encontrada(s)</strong>
+                        <p>Total detectado: <strong>S/ ${totalGeneral.toFixed(2)}</strong></p>
+                    </div>
+                </div>
+
+                <div class="tabla-container">
+                    <table class="tabla-sat">
+                        <thead>
+                            <tr>
+                                <th>Placa</th>
+                                <th>Reglamento</th>
+                                <th>Falta</th>
+                                <th>Documento</th>
+                                <th>Fecha</th>
+                                <th class="text-right">Importe</th>
+                                <th class="text-right">Gastos</th>
+                                <th class="text-right">Descuentos</th>
+                                <th class="text-right">Deuda</th>
+                                <th class="text-center">Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${filas}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        `;
+
+    }catch(error){
+
+        cont.innerHTML = `
+            <div class="result-card">
+                <h3>🏙️ SAT Lima</h3>
+                <div class="mensaje-info text-danger">
+                    ❌ Error de conexión.
+                </div>
+            </div>
+        `;
+
+        console.error(error);
+    }
+}
+/* ===============================
+   PAPELETAS CALLAO
+================================ */
+async function consultarSATCallao(placa){
+
+    const cont = document.getElementById("resultadoCallao");
+
+    // ⏳ Estado cargando
+    cont.innerHTML = `
+        <div class="result-card">
+            <h3>🌊 SAT Callao</h3>
+            <div class="mensaje-info">⏳ Consultando papeletas...</div>
+        </div>
+    `;
+
+    try{
+
+        const res = await fetch("/api/consultar-callao",{
+            method:"POST",
+            headers:{ "Content-Type":"application/json" },
+            body:JSON.stringify({ placa })
+        });
+
+        const data = await res.json();
+      resultadoCallaoGlobal = null;
+        // ❌ Error backend
+        if(!data.success){
+            cont.innerHTML = `
+                <div class="result-card">
+                    <h3>🌊 SAT Callao</h3>
+                    <div class="mensaje-info text-danger">
+                        ❌ Error al consultar.
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        // 🔎 Filtrar resultados válidos
+        const registros = (data.resultados || []).filter(r =>
+            r.Codigo &&
+            !r.Codigo.toLowerCase().includes("valor") &&
+            !r.Codigo.toLowerCase().includes("emisión")
+        );
+       resultadoCallaoGlobal = registros;
+        // 🟢 SIN PAPELETAS
+        if(registros.length === 0){
+            cont.innerHTML = `
+                <div class="result-card success-card">
+                    <h3>🌊 SAT Callao</h3>
+                    <div class="success-box">
+                        <div class="icono-check">✔</div>
+                        <div>
+                            <strong>Sin papeletas registradas</strong>
+                            <p>La placa ${placa} no presenta infracciones en Callao.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        // 🔴 CON PAPELETAS
+        let totalGeneral = 0;
+
+        const filas = registros.map(r => {
+
+            const total = parseFloat(r.DescuentoWeb || 0);
+            if(!isNaN(total)) totalGeneral += total;
+
+            return `
+                <tr>
+                    <td>${r.Codigo || "-"}</td>
+                    <td>${r.NumeroPapeleta || "-"}</td>
+                    <td>${r.FechaInfraccion || "-"}</td>
+                    <td class="text-right">${r.Total || "0.00"}</td>
+                    <td class="text-right">${r.Beneficio || "0.00"}</td>
+                    <td class="text-right">${r.DescuentoWeb || "0.00"}</td>
+                    <td class="text-center">${r.Cuota || "0"}</td>
+                    <td class="text-center">${r.Detalle || "-"}</td>
+                    <td class="text-center">${r.Fraccionar || "-"}</td>
+                </tr>
+            `;
+        }).join("");
+
+        cont.innerHTML = `
+            <div class="result-card danger-card">
+                <h3>🌊 SAT Callao</h3>
+
+                <div class="danger-box">
+                    <div class="icono-alerta">⚠</div>
+                    <div>
+                        <strong>${registros.length} papeleta(s) encontrada(s)</strong>
+                        <p>Total detectado: <strong>S/ ${totalGeneral.toFixed(2)}</strong></p>
+                    </div>
+                </div>
+
+                <div class="tabla-container">
+                    <table class="tabla-sat">
+                        <thead>
+                            <tr>
+                                <th>Placa</th>
+                                <th>Codigo</th>
+                                <th>N° Papeleta</th>
+                                <th class="text-right">Fecha</th>
+                                <th class="text-right">Beneficio</th>
+                                <th class="text-right">Total</th>
+                                <th class="text-center">Cuotas</th>
+                                <th class="text-center">Detalle</th>
+                                <th class="text-center">Fraccionar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${filas}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        `;
+
+    }catch(error){
+
+        cont.innerHTML = `
+            <div class="result-card">
+                <h3>🌊 SAT Callao</h3>
+                <div class="mensaje-info text-danger">
+                    ❌ Error de conexión.
+                </div>
+            </div>
+        `;
+
+        console.error(error);
+    }
+}
+
+/* ===============================
+   PAPELETAS AREQUIPA
+================================ */
+
+async function consultarequipa(placa){
+
+  const cont = document.getElementById("resultado-arequipa");
+
+  // ⏳ Estado cargando
+  cont.innerHTML = `
+    <div class="result-card">
+        <h3>🏔️ SAT Arequipa</h3>
+        <div class="mensaje-info">⏳ Consultando papeletas...</div>
+    </div>
+  `;
+
+  try {
+
+    const res = await fetch("https://www.consultavehicular.services/consultar-arequipa",{
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body:JSON.stringify({ placa })
+    });
+
+    const data = await res.json();
+ resultadoArequipaGlobal = null;
+    const registros = data.resultados || [];
+   resultadoArequipaGlobal = {
+    registros: registros,
+    encabezados: data.encabezados || []
+};
+
+    // 🟢 SIN PAPELETAS
+    if(registros.length === 0){
+        resultadoArequipaGlobal = {
+        registros: [],
+        encabezados: data.encabezados || []
+    };
+      cont.innerHTML = `
+        <div class="result-card success-card">
+            <h3>🏔️ SAT Arequipa</h3>
+            <div class="success-box">
+                <div class="icono-check">✔</div>
+                <div>
+                    <strong>Sin papeletas registradas</strong>
+                    <p>La placa ${placa} no presenta infracciones en Arequipa.</p>
+                </div>
+            </div>
+        </div>
+      `;
+      return;
+    }
+
+    // 🔴 CON PAPELETAS
+    let totalGeneral = 0;
+
+    const filas = registros.map(row => {
+
+      // Intentar detectar montos automáticamente
+      row.forEach(col => {
+        const num = parseFloat(
+          col?.toString()
+              .replace("S/", "")
+              .replace(",", "")
+              .trim()
+        );
+        if(!isNaN(num)) totalGeneral += num;
+      });
+
+      return `
+        <tr>
+          ${row.map(col => `<td>${col || "-"}</td>`).join("")}
+        </tr>
+      `;
+    }).join("");
+
+    const encabezados = (data.encabezados || [])
+        .map(h => `<th>${h}</th>`)
+        .join("");
+
+    cont.innerHTML = `
+      <div class="result-card danger-card">
+          <h3>🏔️ SAT Arequipa</h3>
+
+          <div class="danger-box">
+              <div class="icono-alerta">⚠</div>
+              <div>
+                  <strong>${registros.length} papeleta(s) encontrada(s)</strong>
+                  <p>Total detectado: <strong>S/ ${totalGeneral.toFixed(2)}</strong></p>
+              </div>
+          </div>
+
+          <div class="tabla-container">
+              <table class="tabla-sat">
+                  <thead>
+                      <tr>${encabezados}</tr>
+                  </thead>
+                  <tbody>
+                      ${filas}
+                  </tbody>
+              </table>
+          </div>
+      </div>
+    `;
+
+  } catch(error){
+
+    console.error(error);
+
+    cont.innerHTML = `
+      <div class="result-card">
+          <h3>🏔️ SAT Arequipa</h3>
+          <div class="mensaje-info text-danger">
+              ❌ Error de conexión.
+          </div>
+      </div>
+    `;
+  }
+}
+/* ===============================
+   PAPELETAS TARAPOTO Y HUANCAYO
+================================ */
+
+
+async function consultarSatProvincias(placa){
+
+  const tarapotoDiv = document.getElementById("resultado-tarapoto");
+  const huancayoDiv = document.getElementById("resultado-huancayo");
+  /* Reset globals */
+  resultadoTarapotoGlobal = null;
+  resultadoHuancayoGlobal = null;
+  /* loaders */
+  tarapotoDiv.innerHTML = `
+    <div class="result-card">
+      <h3>🌴 SAT Tarapoto</h3>
+      <div class="mensaje-info">⏳ Consultando papeletas...</div>
+    </div>
+  `;
+
+  huancayoDiv.innerHTML = `
+    <div class="result-card">
+      <h3>⛰️ SAT Huancayo</h3>
+      <div class="mensaje-info">⏳ Consultando papeletas...</div>
+    </div>
+  `;
+
+  try {
+
+    const res = await fetch("/api/consultar",{
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body:JSON.stringify({ placa })
+    });
+
+    const data = await res.json();
+
+    /* =========================
+       🌴 TARAPOTO
+    ========================== */
+
+    if(Array.isArray(data.tarapoto) && data.tarapoto.length){
+resultadoTarapotoGlobal = data.tarapoto; // 🔥 GUARDAMOS
+
+      let total = 0;
+
+      data.tarapoto.forEach(d => {
+        const monto = parseFloat(
+          (d.monto || d.estado || "0")
+            .toString()
+            .replace("S/","")
+            .replace(",","")
+            .trim()
+        );
+        if(!isNaN(monto)) total += monto;
+      });
+
+      tarapotoDiv.innerHTML = `
+        <div class="result-card danger-card">
+          <h3>🌴 SAT Tarapoto</h3>
+
+          <div class="danger-box">
+            <div class="icono-alerta">⚠</div>
+            <div>
+              <strong>${data.tarapoto.length} papeleta(s) encontrada(s)</strong>
+              <p>Total detectado: <strong>S/ ${total.toFixed(2)}</strong></p>
+            </div>
+          </div>
+
+          ${generarTablaProvincias(data.tarapoto)}
+        </div>
+      `;
+
+    }else{
+      resultadoTarapotoGlobal = []; // 🔥 vacío
+      tarapotoDiv.innerHTML = `
+        <div class="result-card success-card">
+          <h3>🌴 SAT Tarapoto</h3>
+          <div class="success-box">
+            <div class="icono-check">✔</div>
+            <div>
+              <strong>Sin papeletas registradas</strong>
+              <p>La placa ${placa} no presenta infracciones.</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    /* =========================
+       ⛰️ HUANCAYO
+    ========================== */
+
+    if(Array.isArray(data.huancayo) && data.huancayo.length){
+     resultadoHuancayoGlobal = data.huancayo; // 🔥 GUARDAMOS
+      let total = 0;
+
+      data.huancayo.forEach(d => {
+        const monto = parseFloat(
+          (d.monto || d.estado || "0")
+            .toString()
+            .replace("S/","")
+            .replace(",","")
+            .trim()
+        );
+        if(!isNaN(monto)) total += monto;
+      });
+
+      huancayoDiv.innerHTML = `
+        <div class="result-card danger-card">
+          <h3>⛰️ SAT Huancayo</h3>
+
+          <div class="danger-box">
+            <div class="icono-alerta">⚠</div>
+            <div>
+              <strong>${data.huancayo.length} papeleta(s) encontrada(s)</strong>
+              <p>Total detectado: <strong>S/ ${total.toFixed(2)}</strong></p>
+            </div>
+          </div>
+
+          ${generarTablaProvincias(data.huancayo)}
+        </div>
+      `;
+
+    }else{
+       resultadoHuancayoGlobal = []; // 🔥 vacío
+      huancayoDiv.innerHTML = `
+        <div class="result-card success-card">
+          <h3>⛰️ SAT Huancayo</h3>
+          <div class="success-box">
+            <div class="icono-check">✔</div>
+            <div>
+              <strong>Sin papeletas registradas</strong>
+              <p>La placa ${placa} no presenta infracciones.</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+  }catch(error){
+
+    tarapotoDiv.innerHTML = `
+      <div class="result-card">
+        <h3>🌴 SAT Tarapoto</h3>
+        <div class="mensaje-info text-danger">❌ Error de conexión.</div>
+      </div>
+    `;
+
+    huancayoDiv.innerHTML = `
+      <div class="result-card">
+        <h3>⛰️ SAT Huancayo</h3>
+        <div class="mensaje-info text-danger">❌ Error de conexión.</div>
+      </div>
+    `;
+  }
+}
+
+/* ===============================
+   PAPELETAS CHICLAYO
+================================ */
+
+async function consultarSATChiclayo(placa){
+
+    const cont = document.getElementById("resultado-chiclayo");
+
+    cont.innerHTML = `
+        <div class="result-card">
+            <h3>☀️ SAT Chiclayo</h3>
+            <div class="mensaje-info">⏳ Consultando papeletas...</div>
+        </div>
+    `;
+
+    try{
+      resultadoChiclayoGlobal = null;
+        const res = await fetch("/api/chiclayo",{
+            method:"POST",
+            headers:{ "Content-Type":"application/json" },
+            body:JSON.stringify({ placa })
+        });
+
+        const contentType = res.headers.get("content-type");
+        let data;
+
+        if(contentType && contentType.includes("application/json")){
+            data = await res.json();
+        }else{
+            const text = await res.text();
+            data = { html:text };
+        }
+
+        if(data.html){
+
+            // 🟢 SIN PAPELETAS
+            if(data.html.includes("No se encontraron papeletas") ||
+               data.html.includes("Su búsqueda no produjo resultados")){
+ resultadoChiclayoGlobal = [];
+                cont.innerHTML = `
+                    <div class="result-card success-card">
+                        <h3>☀️ SAT Chiclayo</h3>
+                        <div class="success-box">
+                            <div class="icono-check">✔</div>
+                            <div>
+                                <strong>Sin papeletas registradas</strong>
+                                <p>La placa ${placa} no presenta infracciones.</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            // 🔴 CON PAPELETAS
+            else{
+resultadoChiclayoGlobal = {
+    tienePapeletas: true,
+    html: data.html
+};
+                cont.innerHTML = `
+                    <div class="result-card danger-card">
+                        <h3>☀️ SAT Chiclayo</h3>
+
+                        <div class="danger-box">
+                            <div class="icono-alerta">⚠</div>
+                            <div>
+                                <strong>Papeletas encontradas</strong>
+                                <p>Se detectaron infracciones en Chiclayo.</p>
+                            </div>
+                        </div>
+
+                        <div class="tabla-container">
+                            ${data.html}
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+    }catch(error){
+
+        cont.innerHTML = `
+            <div class="result-card">
+                <h3>☀️ SAT Chiclayo</h3>
+                <div class="mensaje-info text-danger">
+                    ❌ Error de conexión.
+                </div>
+            </div>
+        `;
+
+        console.error(error);
+    }
+}
+
+/* ===============================
+   PAPELETAS HUANUCO
+================================ */
+
+async function consultarSATHuanuco(placa){
+
+    const cont = document.getElementById("resultado-huanuco");
+
+    cont.innerHTML = `
+        <div class="result-card">
+            <h3>🌄 SAT Huánuco</h3>
+            <div class="mensaje-info">⏳ Consultando papeletas...</div>
+        </div>
+    `;
+
+    try{
+resultadoHuanucoGlobal = null;
+        const res = await fetch("/api/huanuco",{
+            method:"POST",
+            headers:{ "Content-Type":"application/json" },
+            body:JSON.stringify({ placa })
+        });
+
+        const data = await res.json();
+
+        // ❌ ERROR
+        if(data.error){
+            cont.innerHTML = `
+                <div class="result-card">
+                    <h3>🌄 SAT Huánuco</h3>
+                    <div class="mensaje-info text-danger">
+                        ❌ Error al consultar.
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        // 🟢 SIN PAPELETAS
+        if(data.tienePapeletas === false){
+           resultadoHuanucoGlobal = [];
+            cont.innerHTML = `
+                <div class="result-card success-card">
+                    <h3>🌄 SAT Huánuco</h3>
+                    <div class="success-box">
+                        <div class="icono-check">✔</div>
+                        <div>
+                            <strong>Sin papeletas registradas</strong>
+                            <p>La placa ${placa} no presenta infracciones.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        // 🔴 CON PAPELETAS
+        if(data.tienePapeletas === true){
+resultadoHuanucoGlobal = {
+    tienePapeletas: true,
+    html: data.html
+};
+            cont.innerHTML = `
+                <div class="result-card danger-card">
+                    <h3>🌄 SAT Huánuco</h3>
+
+                    <div class="danger-box">
+                        <div class="icono-alerta">⚠</div>
+                        <div>
+                            <strong>Papeletas encontradas</strong>
+                            <p>Se detectaron infracciones en Huánuco.</p>
+                        </div>
+                    </div>
+
+                    <div class="tabla-container">
+                        ${data.html}
+                    </div>
+                </div>
+            `;
+        }
+
+    }catch(error){
+
+        cont.innerHTML = `
+            <div class="result-card">
+                <h3>🌄 SAT Huánuco</h3>
+                <div class="mensaje-info text-danger">
+                    ❌ Error de conexión.
+                </div>
+            </div>
+        `;
+
+        console.error(error);
+    }
+}
+
+async function consultarSATCajamarca(placa){
+
+    const cont = document.getElementById("resultado-cajamarca");
+
+    cont.innerHTML = `
+        <div class="result-card">
+            <h3>🏔️ SAT Cajamarca</h3>
+            <div class="mensaje-info">⏳ Consultando papeletas...</div>
+        </div>
+    `;
+
+    try{
+resultadoCajamarcaGlobal = null;
+        const res = await fetch("/api/cajamarca",{
+            method:"POST",
+            headers:{ "Content-Type":"application/json" },
+            body:JSON.stringify({ placa })
+        });
+
+        const data = await res.json();
+
+        if(data.error){
+
+            cont.innerHTML = `
+                <div class="result-card">
+                    <h3>🏔️ SAT Cajamarca</h3>
+                    <div class="mensaje-info text-danger">
+                        ❌ Error al consultar.
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        /* ✅ NUEVO ESTILO BONITO CUANDO NO HAY PAPELETAS */
+        if(data.tienePapeletas === false){
+resultadoCajamarcaGlobal = [];
+            cont.innerHTML = `
+                <div class="result-card success-card">
+                    <h3>🏔️ SAT Cajamarca</h3>
+                    <div class="success-box">
+                        <div class="icono-check">✔</div>
+                        <div>
+                            <strong>Sin papeletas registradas</strong>
+                            <p>La placa ${placa} no presenta infracciones en Cajamarca.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        /* 🚨 SI TIENE PAPELETAS */
+      if(data.tienePapeletas === true){
+resultadoCajamarcaGlobal = data.datos;
+    let total = 0;
+
+    let tabla = `
+        <table class="tabla-sat">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Papeleta</th>
+                <th>Fecha</th>
+                <th>Código</th>
+                <th>Conductor</th>
+                <th>Infracción</th>
+                <th>Importe</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+    `;
+
+    data.datos.forEach(d => {
+
+        let importeNumerico = parseFloat(
+            (d.importe || "0")
+            .replace("S/", "")
+            .replace(",", "")
+            .trim()
+        ) || 0;
+
+        total += importeNumerico;
+
+        tabla += `
+            <tr>
+                <td>${d.item}</td>
+                <td>${d.papeleta}</td>
+                <td>${d.fecha}</td>
+                <td>${d.codigo}</td>
+                <td>${d.conductor}</td>
+                <td>${d.infraccion}</td>
+                <td>${d.importe}</td>
+                <td>${d.estado}</td>
+            </tr>
+        `;
+    });
+
+    tabla += "</tbody></table>";
+
+    cont.innerHTML = `
+        <div class="result-card danger-card">
+            <h3>🏔️ SAT Cajamarca</h3>
+
+            <div class="danger-box">
+                <div class="icono-alerta">⚠</div>
+                <div>
+                    <strong>${data.datos.length} papeleta(s) encontrada(s)</strong>
+                    <p>Total acumulado: <strong>S/ ${total.toFixed(2)}</strong></p>
+                </div>
+            </div>
+
+            <div class="tabla-container">
+                ${tabla}
+            </div>
+        </div>
+    `;
+}
+
+    }catch(error){
+
+        cont.innerHTML = `
+            <div class="result-card">
+                <h3>🏔️ SAT Cajamarca</h3>
+                <div class="mensaje-info text-danger">
+                    ❌ Error de conexión.
+                </div>
+            </div>
+        `;
+    }
+}
+/* ===============================
+   PAPELETAS CUSCO
+================================ */
+
+async function consultarSATCusco(placa){
+
+    const cont = document.getElementById("resultado-cusco");
+
+    cont.innerHTML = `
+        <div class="result-card">
+            <h3>🦙 SAT Cusco</h3>
+            <div class="mensaje-info">⏳ Consultando papeletas...</div>
+        </div>
+    `;
+
+    try{
+resultadoCuscoGlobal = null;
+        const res = await fetch("/api/cusco",{
+            method:"POST",
+            headers:{ "Content-Type":"application/json" },
+            body:JSON.stringify({ placa })
+        });
+
+        const data = await res.json();
+
+        if(data.error){
+            cont.innerHTML = `
+                <div class="result-card">
+                    <h3>🦙 SAT Cusco</h3>
+                    <div class="mensaje-info text-danger">
+                        ❌ Error al consultar.
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        /* 🟢 SIN PAPELETAS */
+        if(data.tienePapeletas === false){
+resultadoCuscoGlobal = [];
+            cont.innerHTML = `
+                <div class="result-card success-card">
+                    <h3>🦙 SAT Cusco</h3>
+                    <div class="success-box">
+                        <div class="icono-check">✔</div>
+                        <div>
+                            <strong>Sin papeletas registradas</strong>
+                            <p>La placa ${placa} no presenta infracciones en Cusco.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        /* 🔴 CON PAPELETAS */
+
+        let total = 0;
+
+        let tabla = `
+            <table class="tabla-sat">
+            <thead>
+                <tr>
+                    ${data.headers.map(h => `<th>${h}</th>`).join('')}
+                </tr>
+            </thead>
+            <tbody>
+        `;
+
+        data.datos.forEach(row => {
+
+            // Intentamos detectar importe automáticamente
+            row.forEach(cell => {
+                let num = parseFloat(
+                    cell.replace("S/", "")
+                        .replace(",", "")
+                        .trim()
+                );
+                if(!isNaN(num)) total += num;
+            });
+
+            tabla += `
+                <tr>
+                    ${row.map(cell => `<td>${cell}</td>`).join('')}
+                </tr>
+            `;
+        });
+
+        tabla += "</tbody></table>";
+resultadoCuscoGlobal = {
+    headers: data.headers,
+    datos: data.datos
+};
+        cont.innerHTML = `
+            <div class="result-card danger-card">
+                <h3>🦙 SAT Cusco</h3>
+
+                <div class="danger-box">
+                    <div class="icono-alerta">⚠</div>
+                    <div>
+                        <strong>${data.datos.length} papeleta(s) encontrada(s)</strong>
+                        <p>Total acumulado detectado: <strong>S/ ${total.toFixed(2)}</strong></p>
+                    </div>
+                </div>
+
+                <div class="tabla-container">
+                    ${tabla}
+                </div>
+            </div>
+        `;
+
+    }catch(error){
+
+        cont.innerHTML = `
+            <div class="result-card">
+                <h3>🦙 SAT Cusco</h3>
+                <div class="mensaje-info text-danger">
+                    ❌ Error de conexión.
+                </div>
+            </div>
+        `;
+    }
+}
+
+/* ===============================
+   PAPELETAS ICA
+================================ */
+async function consultarSATIca(placa){
+
+    const cont = document.getElementById("resultado-ica");
+
+    cont.innerHTML = `
+        <div class="result-card">
+            <h3>🏜️ SAT Ica</h3>
+            <div class="mensaje-info">⏳ Consultando papeletas...</div>
+        </div>
+    `;
+
+    try{
+  resultadoIcaGlobal = null;
+        const res = await fetch("/api/ica",{
+            method:"POST",
+            headers:{ "Content-Type":"application/json" },
+            body:JSON.stringify({ placa })
+        });
+
+        const data = await res.json();
+
+        if(data.error){
+            cont.innerHTML = `
+                <div class="result-card">
+                    <h3>🏜️ SAT Ica</h3>
+                    <div class="mensaje-info text-danger">
+                        ❌ Error al consultar.
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        /* 🟢 SIN PAPELETAS */
+        if(data.tienePapeletas === false){
+resultadoIcaGlobal = [];
+            cont.innerHTML = `
+                <div class="result-card success-card">
+                    <h3>🏜️ SAT Ica</h3>
+                    <div class="success-box">
+                        <div class="icono-check">✔</div>
+                        <div>
+                            <strong>Sin papeletas registradas</strong>
+                            <p>La placa ${placa} no presenta infracciones en Ica.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        /* 🔴 CON PAPELETAS */
+
+        let total = 0;
+
+        let tabla = `
+            <table class="tabla-sat">
+            <thead>
+                <tr>
+                    ${data.headers.map(h => `<th>${h}</th>`).join('')}
+                </tr>
+            </thead>
+            <tbody>
+        `;
+
+        data.datos.forEach(row => {
+
+            row.forEach(cell => {
+                let num = parseFloat(
+                    cell.replace("S/", "")
+                        .replace(",", "")
+                        .trim()
+                );
+                if(!isNaN(num)) total += num;
+            });
+
+            tabla += `
+                <tr>
+                    ${row.map(cell => `<td>${cell}</td>`).join('')}
+                </tr>
+            `;
+        });
+
+        tabla += "</tbody></table>";
+resultadoIcaGlobal = {
+    headers: data.headers,
+    datos: data.datos
+};
+        cont.innerHTML = `
+            <div class="result-card danger-card">
+                <h3>🏜️ SAT Ica</h3>
+
+                <div class="danger-box">
+                    <div class="icono-alerta">⚠</div>
+                    <div>
+                        <strong>${data.datos.length} papeleta(s) encontrada(s)</strong>
+                        <p>Total acumulado detectado: <strong>S/ ${total.toFixed(2)}</strong></p>
+                    </div>
+                </div>
+
+                <div class="tabla-container">
+                    ${tabla}
+                </div>
+            </div>
+        `;
+
+    }catch(error){
+
+        cont.innerHTML = `
+            <div class="result-card">
+                <h3>🏜️ SAT Ica</h3>
+                <div class="mensaje-info text-danger">
+                    ❌ Error de conexión.
+                </div>
+            </div>
+        `;
+    }
+}
+
+/* ===============================
+   PAPELETAS ANDAHUAYLAS
+================================ */
+async function consultarSATAndahuaylas(placa){
+
+    const cont = document.getElementById("resultado-andahuaylas");
+
+    cont.innerHTML = `
+        <div class="result-card">
+            <h3>🌄 SAT Andahuaylas</h3>
+            <div class="mensaje-info">⏳ Consultando papeletas...</div>
+        </div>
+    `;
+
+    try{
+resultadoAndahuaylasGlobal = null;
+        const res = await fetch("/api/andahuaylas",{
+            method:"POST",
+            headers:{ "Content-Type":"application/json" },
+            body:JSON.stringify({ placa })
+        });
+
+        const data = await res.json();
+
+        /* ❌ ERROR BACKEND */
+        if(!data.success){
+
+            cont.innerHTML = `
+                <div class="result-card danger-card">
+                    <h3>🌄 SAT Andahuaylas</h3>
+                    <div class="danger-box">
+                        <div class="icono-alerta">⚠</div>
+                        <div>
+                            <strong>Error al consultar</strong>
+                            <p>${data.error}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        /* 🟢 SI NO TIENE PAPELETAS */
+    const sinPapeletas =
+    data.html &&
+    (
+        data.html.toLowerCase().includes("no tiene") ||
+        data.html.toLowerCase().includes("no presenta")
+    );
+
+if(sinPapeletas){
+resultadoAndahuaylasGlobal = [];
+    cont.innerHTML = `
+        <div class="result-card success-card">
+            <h3>🌄 SAT Andahuaylas</h3>
+            <div class="success-box">
+                <div class="icono-check">✔</div>
+                <div>
+                    <strong>Sin papeletas registradas</strong>
+                    <p>La placa ${placa} no presenta infracciones en Andahuaylas.</p>
+                </div>
+            </div>
+        </div>
+    `;
+    return;
+}
+        /* 🔴 SI TIENE PAPELETAS */
+resultadoAndahuaylasGlobal = {
+    html: data.html
+};
+        cont.innerHTML = `
+            <div class="result-card danger-card">
+                <h3>🌄 SAT Andahuaylas</h3>
+
+                <div class="danger-box">
+                    <div class="icono-alerta">⚠</div>
+                    <div>
+                        <strong>Papeletas detectadas</strong>
+                        <p>La placa ${placa} registra infracciones.</p>
+                    </div>
+                </div>
+
+                <div class="tabla-container">
+                    ${data.html}
+                </div>
+            </div>
+        `;
+
+    }catch(error){
+
+        console.error("Error real:", error);
+
+        cont.innerHTML = `
+            <div class="result-card danger-card">
+                <h3>🌄 SAT Andahuaylas</h3>
+                <div class="danger-box">
+                    <div class="icono-alerta">⚠</div>
+                    <div>
+                        <strong>Error de conexión</strong>
+                        <p>No se pudo contactar con el servidor.</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+}
+
+
+/* ===============================
+   PAPELETAS CHACHAPOYAS 
+================================ */
+async function consultarSATChachapoyas(placa){
+
+    const cont = document.getElementById("resultado-chachapoyas");
+
+    cont.innerHTML = `
+        <div class="result-card">
+            <h3>🌿 SAT Chachapoyas</h3>
+            <div class="mensaje-info">⏳ Consultando papeletas...</div>
+        </div>
+    `;
+
+    try{
+resultadoChachapoyasGlobal = null;
+        const res = await fetch("/api/chachapoyas",{
+            method:"POST",
+            headers:{ "Content-Type":"application/json" },
+            body:JSON.stringify({ placa })
+        });
+
+        const data = await res.json();
+
+        if(data.error){
+            cont.innerHTML = `
+                <div class="result-card">
+                    <h3>🌿 SAT Chachapoyas</h3>
+                    <div class="mensaje-info text-danger">
+                        ❌ Error al consultar.
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        /* 🟢 SIN PAPELETAS */
+        if(data.tienePapeletas === false){
+resultadoChachapoyasGlobal = [];
+            cont.innerHTML = `
+                <div class="result-card success-card">
+                    <h3>🌿 SAT Chachapoyas</h3>
+                    <div class="success-box">
+                        <div class="icono-check">✔</div>
+                        <div>
+                            <strong>Sin papeletas registradas</strong>
+                            <p>La placa ${placa} no presenta infracciones en Chachapoyas.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        /* 🔴 CON PAPELETAS */
+
+        let total = 0;
+
+        let tabla = `
+            <table class="tabla-sat">
+            <thead>
+                <tr>
+                    ${data.headers.map(h => `<th>${h}</th>`).join('')}
+                </tr>
+            </thead>
+            <tbody>
+        `;
+
+        data.datos.forEach(row => {
+
+            row.forEach(cell => {
+                let num = parseFloat(
+                    cell.replace("S/", "")
+                        .replace(",", "")
+                        .trim()
+                );
+                if(!isNaN(num)) total += num;
+            });
+
+            tabla += `
+                <tr>
+                    ${row.map(cell => `<td>${cell}</td>`).join('')}
+                </tr>
+            `;
+        });
+
+        tabla += "</tbody></table>";
+resultadoChachapoyasGlobal = {
+    headers: data.headers,
+    datos: data.datos
+};
+        cont.innerHTML = `
+            <div class="result-card danger-card">
+                <h3>🌿 SAT Chachapoyas</h3>
+
+                <div class="danger-box">
+                    <div class="icono-alerta">⚠</div>
+                    <div>
+                        <strong>${data.datos.length} papeleta(s) encontrada(s)</strong>
+                        <p>Total acumulado detectado: <strong>S/ ${total.toFixed(2)}</strong></p>
+                    </div>
+                </div>
+
+                <div class="tabla-container">
+                    ${tabla}
+                </div>
+            </div>
+        `;
+
+    }catch(error){
+
+        cont.innerHTML = `
+            <div class="result-card">
+                <h3>🌿 SAT Chachapoyas</h3>
+                <div class="mensaje-info text-danger">
+                    ❌ Error de conexión.
+                </div>
+            </div>
+        `;
+    }
+}
+
+/* ===============================
+   PAPELETAS PUNO
+================================ */
+async function consultarSATPuno(placa){
+
+    const contenedor = document.getElementById("resultado-puno");
+
+    // ⏳ Estado cargando
+    contenedor.innerHTML = `
+        <div class="result-card">
+            <h3>🏛️ SAT Puno</h3>
+            <div class="mensaje-info">
+                ⏳ Consultando papeletas...
+            </div>
+        </div>
+    `;
+
+    try{
+resultadoPunoGlobal = null;
+        const response = await fetch("/api/puno",{
+            method:"POST",
+            headers:{ "Content-Type":"application/json" },
+            body:JSON.stringify({ placa })
+        });
+
+        const data = await response.json();
+
+        // ❌ Error backend
+        if(data.error){
+             contenedor.innerHTML = `
+                <div class="result-card success-card">
+                    <h3>🏛️ SAT Puno</h3>
+
+                    <div class="success-box">
+                        <div class="icono-check">✔</div>
+                        <div>
+                            <strong>Sin papeletas registradas</strong>
+                            <p>La placa ${placa} no presenta infracciones en Puno.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        // 🟢 SIN PAPELETAS
+        if(data.tienePapeletas === false){
+resultadoPunoGlobal = [];
+            contenedor.innerHTML = `
+                <div class="result-card success-card">
+                    <h3>🏛️ SAT Puno</h3>
+
+                    <div class="success-box">
+                        <div class="icono-check">✔</div>
+                        <div>
+                            <strong>Sin papeletas registradas</strong>
+                            <p>La placa ${placa} no presenta infracciones en Puno.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            return;
+        }
+
+        // 🔴 CON PAPELETAS
+
+        let total = 0;
+
+        let tablaHTML = `
+            <table class="tabla-sat">
+                <thead>
+                    <tr>
+                        ${data.headers.map(h => `<th>${h}</th>`).join('')}
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        data.datos.forEach(fila => {
+
+            fila.forEach(celda => {
+                let numero = parseFloat(
+                    celda.replace("S/", "")
+                          .replace(",", "")
+                          .trim()
+                );
+                if(!isNaN(numero)){
+                    total += numero;
+                }
+            });
+
+            tablaHTML += `
+                <tr>
+                    ${fila.map(c => `<td>${c}</td>`).join('')}
+                </tr>
+            `;
+        });
+
+        tablaHTML += `
+                </tbody>
+            </table>
+        `;
+resultadoPunoGlobal = {
+    headers: data.headers,
+    datos: data.datos,
+    total: total
+};
+        contenedor.innerHTML = `
+            <div class="result-card danger-card">
+                <h3>🏛️ SAT Puno</h3>
+
+                <div class="danger-box">
+                    <div class="icono-alerta">⚠</div>
+                    <div>
+                        <strong>${data.datos.length} papeleta(s) encontrada(s)</strong>
+                        <p>Total detectado: <strong>S/ ${total.toFixed(2)}</strong></p>
+                    </div>
+                </div>
+
+                <div class="tabla-container">
+                    ${tablaHTML}
+                </div>
+            </div>
+        `;
+
+    }catch(error){
+
+        contenedor.innerHTML = `
+            <div class="result-card">
+                <h3>🏛️ SAT Puno</h3>
+                <div class="mensaje-info text-danger">
+                    ❌ Error de conexión.
+                </div>
+            </div>
+        `;
+    }
+}
+/* ===============================
+   PAPELETAS TACNA
+================================ */
+
+async function consultarSATTacna(placa){
+
+    const cont = document.getElementById("resultado-tacna");
+
+    cont.innerHTML = `
+        <div class="result-card">
+            <h3>☀️ SAT Tacna</h3>
+            <div class="mensaje-info">⏳ Consultando papeletas...</div>
+        </div>
+    `;
+
+    try{
+resultadoTacnaGlobal = null;
+        const res = await fetch("/api/tacna",{
+            method:"POST",
+            headers:{ "Content-Type":"application/json" },
+            body:JSON.stringify({ placa })
+        });
+
+        const data = await res.json();
+
+        if(data.error){
+            cont.innerHTML = `
+                <div class="result-card">
+                    <h3>☀️ SAT Tacna</h3>
+                    <div class="mensaje-info text-danger">
+                        ❌ Error al consultar.
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        // 🟢 SIN PAPELETAS
+        if(data.tienePapeletas === false){
+         resultadoTacnaGlobal = [];
+            cont.innerHTML = `
+                <div class="result-card success-card">
+                    <h3>☀️ SAT Tacna</h3>
+                    <div class="success-box">
+                        <div class="icono-check">✔</div>
+                        <div>
+                            <strong>Sin papeletas registradas</strong>
+                            <p>La placa ${placa} no presenta infracciones en Tacna.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        // 🔴 CON PAPELETAS
+        let total = 0;
+
+        let tabla = `
+            <table class="tabla-sat">
+                <thead>
+                    <tr>
+                        ${data.headers.map(h => `<th>${h}</th>`).join('')}
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        data.datos.forEach(row => {
+
+            row.forEach(cell => {
+                let num = parseFloat(
+                    cell.replace("S/", "")
+                        .replace(",", "")
+                        .trim()
+                );
+                if(!isNaN(num)) total += num;
+            });
+
+            tabla += `
+                <tr>
+                    ${row.map(cell => `<td>${cell}</td>`).join('')}
+                </tr>
+            `;
+        });
+
+        tabla += "</tbody></table>";
+resultadoTacnaGlobal = {
+    headers: data.headers,
+    datos: data.datos,
+    total: total
+};
+        cont.innerHTML = `
+            <div class="result-card danger-card">
+                <h3>☀️ SAT Tacna</h3>
+                <div class="danger-box">
+                    <div class="icono-alerta">⚠</div>
+                    <div>
+                        <strong>${data.datos.length} papeleta(s) encontrada(s)</strong>
+                        <p>Total detectado: <strong>S/ ${total.toFixed(2)}</strong></p>
+                    </div>
+                </div>
+                <div class="tabla-container">
+                    ${tabla}
+                </div>
+            </div>
+        `;
+
+    }catch(error){
+
+     
+            cont.innerHTML = `
+                <div class="result-card success-card">
+                    <h3>☀️ SAT Tacna</h3>
+                    <div class="success-box">
+                        <div class="icono-check">✔</div>
+                        <div>
+                            <strong>Sin papeletas registradas</strong>
+                            <p>La placa ${placa} no presenta infracciones en Tacna.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            return;
+        }
+}
+
+
+/* ===============================
+   FOTO PAPELETAS
+================================ */
+ 
+async function   consultarPITo(placa) {
+
+  
+  const mensajeDiv = document.getElementById("mensaje");
+  const tabla = document.getElementById("tablaResultados");
+  const cuerpo = document.getElementById("cuerpoTabla");
+
+  if (!placa) {
+    mensajeDiv.innerHTML = "⚠ Ingrese una placa";
+    mensajeDiv.className = "text-center text-warning fw-bold";
+    return;
+  }
+
+  cuerpo.innerHTML = "";
+  tabla.classList.add("d-none");
+
+  mensajeDiv.innerHTML = "⏳ Consultando...";
+  mensajeDiv.className = "text-center text-primary fw-bold";
+
+  try {
+resultadoPITGlobal = null;
+    const res = await fetch("/consultarPIT", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ placa })
+    });
+
+    const data = await res.json();
+
+    if (data.error) {
+      mensajeDiv.innerHTML = "❌ Error: " + data.error;
+      mensajeDiv.className = "text-center text-danger fw-bold";
+      return;
+    }
+
+    if (!data.resultados || data.resultados.length === 0) {
+      mensajeDiv.innerHTML = "🚫 No se encontraron papeletas";
+      mensajeDiv.className = "text-center text-warning fw-bold";
+     resultadoPITGlobal = [];
+      return;
+    }
+resultadoPITGlobal = {
+    datos: data.resultados
+};
+    mensajeDiv.innerHTML =
+      "✅ Se encontraron " + data.resultados.length + " papeleta(s)";
+    mensajeDiv.className = "text-center text-success fw-bold";
+
+    data.resultados.forEach(r => {
+
+      const fila = `
+        <tr>
+          <td>${r.placa}</td>
+          <td>${r.documento}</td>
+          <td>${r.fecha}</td>
+          <td class="fw-bold text-danger">${r.total}</td>
+          <td>
+            <span class="badge bg-${r.estado.includes("PAGADO") ? "success" : "danger"} badge-estado">
+              ${r.estado}
+            </span>
+          </td>
+          <td>${r.falta}</td>
+          <td>${r.licencia}</td>
+          <td>
+            ${r.evidencia
+              ? `<a href="${r.evidencia}" target="_blank" class="btn btn-sm btn-outline-primary">Ver</a>`
+              : "—"}
+          </td>
+        </tr>
+      `;
+
+      cuerpo.innerHTML += fila;
+    });
+
+    tabla.classList.remove("d-none");
+
+  } catch (err) {
+
+    mensajeDiv.innerHTML = "❌ Error de conexión";
+    mensajeDiv.className = "text-center text-danger fw-bold";
+  }
+}
+
+/* ===============================
+   DESCARGAR PDF
+================================ */
+
+function generarReporte(){
+
+    let totalDeuda = 0;
+
+    reporteGeneral.resultados.forEach(r=>{
+        if(r.estado === "fulfilled" && r.data?.deudaTotal){
+            totalDeuda += Number(r.data.deudaTotal);
+        }
+    });
+
+    const estadoGeneral = totalDeuda > 0 
+        ? "VEHÍCULO CON DEUDA"
+        : "VEHÍCULO SIN DEUDA";
+
+    const colorEstadoGeneral = totalDeuda > 0 
+        ? "#e53935"
+        : "#2e7d32";
+
+    let html = `
+    <html>
+    <head>
+        <title>Reporte Vehicular</title>
+
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+        <style>
+            *{ box-sizing:border-box; }
+
+            body{
+                font-family: 'Inter', sans-serif;
+                background:linear-gradient(135deg,#eef2f7,#f8fafc);
+                padding:50px;
+                margin:0;
+            }
+
+            .container{
+                max-width:1100px;
+                margin:auto;
+                background:#fff;
+                border-radius:18px;
+                box-shadow:0 20px 50px rgba(0,0,0,0.08);
+                overflow:hidden;
+            }
+
+            /* HEADER */
+            .header{
+                background:linear-gradient(135deg,#0d47a1,#1565c0);
+                color:#fff;
+                padding:35px;
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+            }
+
+            .header-left img{
+                height:85px;
+                margin-bottom:15px;
+            }
+
+            .header h1{
+                margin:0;
+                font-size:24px;
+                font-weight:600;
+            }
+
+            .header-info{
+                margin-top:10px;
+                font-size:14px;
+                opacity:0.9;
+            }
+
+            .badge{
+                padding:12px 28px;
+                border-radius:40px;
+                font-weight:600;
+                font-size:13px;
+                background:${colorEstadoGeneral};
+                box-shadow:0 4px 15px rgba(0,0,0,0.2);
+            }
+
+            /* RESUMEN */
+            .resumen{
+                padding:30px 35px;
+                border-bottom:1px solid #eee;
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+            }
+
+            .resumen h2{
+                margin:0;
+                font-size:16px;
+                font-weight:500;
+                color:#555;
+            }
+
+            .resumen-total{
+                font-size:32px;
+                font-weight:700;
+                color:${colorEstadoGeneral};
+            }
+
+            /* CARDS */
+            .cards{
+                padding:35px;
+            }
+
+            .card{
+                background:#fff;
+                border-radius:14px;
+                padding:25px;
+                margin-bottom:25px;
+                box-shadow:0 8px 25px rgba(0,0,0,0.05);
+                border:1px solid #f1f1f1;
+                transition:0.3s;
+            }
+
+            .card:hover{
+                transform:translateY(-4px);
+                box-shadow:0 12px 35px rgba(0,0,0,0.08);
+            }
+
+            .card-header{
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                margin-bottom:20px;
+            }
+
+            .card-header h3{
+                margin:0;
+                font-size:17px;
+                font-weight:600;
+                color:#0d47a1;
+            }
+
+            .badge-modulo{
+                padding:6px 16px;
+                border-radius:30px;
+                font-size:11px;
+                font-weight:600;
+                color:#fff;
+                letter-spacing:0.5px;
+            }
+
+            .item{
+                display:flex;
+                justify-content:space-between;
+                padding:10px 0;
+                border-bottom:1px dashed #e5e7eb;
+                font-size:14px;
+            }
+
+            .item:last-child{
+                border-bottom:none;
+            }
+
+            .label{
+                font-weight:500;
+                color:#6b7280;
+                text-transform:capitalize;
+            }
+
+            .value{
+                font-weight:600;
+                color:#111827;
+            }
+
+            .footer{
+                text-align:center;
+                padding:20px;
+                font-size:12px;
+                color:#6b7280;
+                border-top:1px solid #eee;
+                background:#fafafa;
+            }
+         
+            .table-box{
+    margin-top:20px;
+    border-radius:12px;
+    overflow:hidden;
+    border:1px solid #e5e7eb;
+    box-shadow:0 4px 18px rgba(0,0,0,0.05);
+    background:#fff;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:13px;
+}
+
+thead{
+    background:linear-gradient(135deg,#0d47a1,#1565c0);
+    color:white;
+}
+
+th{
+    padding:12px;
+    text-align:left;
+    font-weight:600;
+    letter-spacing:0.5px;
+}
+
+td{
+    padding:12px;
+    border-bottom:1px solid #f1f1f1;
+}
+
+tbody tr:hover{
+    background:#f8fafc;
+}
+
+/* DEUDAS */
+.deuda-alta{
+    color:#e53935;
+    font-weight:700;
+}
+
+.deuda-cero{
+    color:#2e7d32;
+    font-weight:600;
+}
+        </style>
+    </head>
+    <body>
+
+        <div class="container">
+
+            <div class="header">
+                <div class="header-left">
+                    <img src="Sin título-hh.png">
+                    <h1>Reporte Vehicular Oficial</h1>
+                    <div class="header-info">
+                        Placa: ${reporteGeneral.placa} <br>
+                        Fecha: ${reporteGeneral.fechaConsulta}
+                    </div>
+                </div>
+
+                <div class="badge">
+                    ${estadoGeneral}
+                </div>
+            </div>
+
+            <div class="resumen">
+                <h2>Resumen Total de Deudas</h2>
+                <div class="resumen-total">
+                    S/ ${totalDeuda.toFixed(2)}
+                </div>
+            </div>
+
+            <div class="cards">
+    `;
+
+    reporteGeneral.resultados.forEach(r => {
+
+        if(r.estado !== "fulfilled") return;
+        if(!r.data) return;
+
+        const deudaModulo = Number(r.data.deudaTotal || 0);
+
+        const colorModulo = deudaModulo > 0 
+            ? "#e53935"
+            : "#2e7d32";
+
+        const estadoModulo = deudaModulo > 0 
+            ? "CON DEUDA"
+            : "SIN DEUDA";
+
+        html += `
+        <div class="card">
+            <div class="card-header">
+                <h3>${r.data.modulo || "Módulo"}</h3>
+                <div class="badge-modulo" style="background:${colorModulo}">
+                    ${estadoModulo}
+                </div>
+            </div>
+        `;
+
+        function renderObjeto(obj){
+            let contenido = "";
+
+            Object.entries(obj).forEach(([key,val])=>{
+
+                if(val === null || val === undefined) return;
+                if(key === "modulo" || key === "deudaTotal") return;
+
+                if(typeof val === "object"){
+                    contenido += `
+                        <div style="margin-top:15px;font-weight:600;color:#1565c0;">
+                            ${key}
+                        </div>
+                    `;
+                    contenido += renderObjeto(val);
+                }else{
+                    contenido += `
+                        <div class="item">
+                            <div class="label">${key}</div>
+                            <div class="value">${val}</div>
+                        </div>
+                    `;
+                }
+            });
+
+            return contenido;
+        }
+
+        html += renderObjeto(r.data);
+
+        html += `</div>`;
+    });
+    if(resultadoSiniestroGlobal){
+    html += `
+    <div class="card">
+        <div class="card-header">
+            <h3>🚧 Reporte SBS (Siniestros)</h3>
+        </div>
+
+        <div class="item">
+            <div class="label">Placa</div>
+            <div class="value">${resultadoSiniestroGlobal.placa || "-"}</div>
+        </div>
+
+        <div class="item">
+            <div class="label">Consulta</div>
+            <div class="value">${resultadoSiniestroGlobal.fechaConsulta || "-"}</div>
+        </div>
+
+        <div class="item">
+            <div class="label">Actualizado</div>
+            <div class="value">${resultadoSiniestroGlobal.actualizadoA || "-"}</div>
+        </div>
+
+        <div class="item">
+            <div class="label">Accidentes</div>
+            <div class="value">${resultadoSiniestroGlobal.cantidadAccidentes || "0"}</div>
+        </div>
+    </div>
+    `;
+}
+
+
+/* ================================
+   SUTRAN
+================================ */
+
+if(resultadoSutranGlobal){
+    html += `
+    <div class="card">
+        <div class="card-header">
+            <h3>🚌 Infracciones SUTRAN</h3>
+        </div>
+        <div class="item">
+            <div class="label">Resultado</div>
+            <div class="value">${resultadoSutranGlobal}</div>
+        </div>
+    </div>
+    `;
+}
+
+
+/* ================================
+   ORDEN CAPTURA
+================================ */
+
+if(resultadoOrdenCapturaGlobal !== null){
+
+    html += `<div class="card"><div class="card-header">
+    <h3>🛑 Órdenes de Captura</h3></div>`;
+
+    if(resultadoOrdenCapturaGlobal === "error"){
+        html += `<div class="item text-danger">❌ Error de conexión</div>`;
+    }
+    else if(Array.isArray(resultadoOrdenCapturaGlobal) && resultadoOrdenCapturaGlobal.length === 0){
+        html += `<div class="item text-success">✔ No registra órdenes de captura</div>`;
+    }
+    else{
+        html += `<p><strong>${resultadoOrdenCapturaGlobal.length}</strong> orden(es) encontrada(s)</p>`;
+    }
+
+    html += `</div>`;
+}
+
+/* ================================
+   REVISION TECNICA
+================================ */
+
+if(resultadoRevisionGlobal){
+
+    html += `
+    <div class="card">
+        <div class="card-header">
+            <h3>🔧 Revisión Técnica (MTC)</h3>
+        </div>
+
+        <div class="item">
+            <div class="label">Certificado</div>
+            <div class="value">${resultadoRevisionGlobal.certificado || "-"}</div>
+        </div>
+
+        <div class="item">
+            <div class="label">Fecha Revisión</div>
+            <div class="value">${resultadoRevisionGlobal.fechaRevision || "-"}</div>
+        </div>
+
+        <div class="item">
+            <div class="label">Vencimiento</div>
+            <div class="value">${resultadoRevisionGlobal.fechaVencimiento || "-"}</div>
+        </div>
+
+        <div class="item">
+            <div class="label">Resultado</div>
+            <div class="value">${resultadoRevisionGlobal.resultado || "-"}</div>
+        </div>
+
+        <div class="item">
+            <div class="label">Planta</div>
+            <div class="value">${resultadoRevisionGlobal.planta || "-"}</div>
+        </div>
+    </div>
+    `;
+}
+
+/* ================================
+   IMPUESTO VEHICULAR
+================================ */
+
+if(resultadoImpuestoGlobal !== null){
+
+    html += `<div class="card"><div class="card-header">
+    <h3>🚘 Impuesto Vehicular (SAT)</h3></div>`;
+
+    if(resultadoImpuestoGlobal === "error"){
+        html += `<div class="item text-danger">❌ Error de conexión</div>`;
+    }
+    else if(Array.isArray(resultadoImpuestoGlobal)){
+        html += `<div class="item text-success">✔ No registra deuda pendiente</div>`;
+    }
+    else{
+        html += `
+            <p><strong>Placa:</strong> ${resultadoImpuestoGlobal.placa}</p>
+            <p><strong>Deuda total:</strong> 
+                <span class="text-danger">${resultadoImpuestoGlobal.total}</span>
+            </p>
+        `;
+    }
+
+    html += `</div>`;
+}
+/* ================================
+   INFOGAS
+================================ */
+
+if(resultadoInfogasGlobal){
+
+    html += `
+    <div class="card">
+        <div class="card-header">
+            <h3>⛽ Infogas GNV</h3>
+        </div>
+
+        <div class="item">
+            <div class="label">Tipo Combustible</div>
+            <div class="value">${resultadoInfogasGlobal.tipoCombustible || "-"}</div>
+        </div>
+
+        <div class="item">
+            <div class="label">Habilitado</div>
+            <div class="value">${resultadoInfogasGlobal.habilitado || "-"}</div>
+        </div>
+
+        <div class="item">
+            <div class="label">Tiene Crédito</div>
+            <div class="value">${resultadoInfogasGlobal.tieneCredito || "-"}</div>
+        </div>
+
+        <div class="item">
+            <div class="label">Venc. Revisión Anual</div>
+            <div class="value">${resultadoInfogasGlobal.vencimientoRevisionAnual || "-"}</div>
+        </div>
+
+        <div class="item">
+            <div class="label">Venc. Cilindro</div>
+            <div class="value">${resultadoInfogasGlobal.vencimientoCilindro || "-"}</div>
+        </div>
+    </div>
+    `;
+}
+
+if(resultadoATUGlobal){
+
+    html += `
+    <div class="card">
+        <div class="card-header">
+            <h3>🚌 Consulta ATU</h3>
+        </div>
+
+        <div class="item"><div class="label">Modalidad</div><div class="value">${resultadoATUGlobal.vehiculo.modalidad}</div></div>
+        <div class="item"><div class="label">Marca</div><div class="value">${resultadoATUGlobal.vehiculo.marca}</div></div>
+        <div class="item"><div class="label">Modelo</div><div class="value">${resultadoATUGlobal.vehiculo.modelo}</div></div>
+        <div class="item"><div class="label">Estado</div><div class="value">${resultadoATUGlobal.vehiculo.estado}</div></div>
+        <div class="item"><div class="label">Vencimiento</div><div class="value">${resultadoATUGlobal.tarjeta.fecha_vencimiento}</div></div>
+        <div class="item"><div class="label">Titular</div><div class="value">${resultadoATUGlobal.titular.nombre}</div></div>
+    </div>
+    `;
+}
+
+
+/* ================================
+   SAT LIMA
+================================ */
+
+if(Array.isArray(resultadoLimaGlobal)){
+
+    html += `
+    <div class="card">
+        <div class="card-header">
+            <h3>🏙️ SAT Lima</h3>
+        </div>
+    `;
+
+    if(resultadoLimaGlobal.length === 0){
+
+        html += `
+            <div class="item">
+                <div class="value text-success">
+                    ✔ Sin papeletas registradas
+                </div>
+            </div>
+        `;
+
+    }else{
+
+        html += `
+        <div class="table-box">
+<table>
+            <thead>
+                <tr>
+                    <th>Documento</th>
+                    <th>Fecha</th>
+                    <th>Deuda</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+        `;
+
+        resultadoLimaGlobal.forEach(r=>{
+            html += `
+                <tr>
+                    <td>${r.Documento || "-"}</td>
+                    <td>${r.FechaInfraccion || "-"}</td>
+                    <td>${r.Deuda || "0.00"}</td>
+                    <td>${r.Estado || "-"}</td>
+                </tr>
+            `;
+        });
+
+        html += `</tbody></table></div>`;
+    }
+
+    html += `</div>`;
+}
+
+
+/* ================================
+   SAT CALLAO
+================================ */
+
+if(Array.isArray(resultadoCallaoGlobal)){
+
+    html += `
+    <div class="card">
+        <div class="card-header">
+            <h3>🌊 SAT Callao</h3>
+        </div>
+    `;
+
+    if(resultadoCallaoGlobal.length === 0){
+
+        html += `
+            <div class="item">
+                <div class="value text-success">
+                    ✔ Sin papeletas registradas
+                </div>
+            </div>
+        `;
+
+    }else{
+
+        html += `
+        <div class="table-box">
+<table>
+            <thead>
+                <tr>
+                    <th>Papeleta</th>
+                    <th>Fecha</th>
+                    <th>Total</th>
+                    <th>Detalle</th>
+                </tr>
+            </thead>
+            <tbody>
+        `;
+
+        resultadoCallaoGlobal.forEach(r=>{
+            html += `
+                <tr>
+                    <td>${r.NumeroPapeleta || "-"}</td>
+                    <td>${r.FechaInfraccion || "-"}</td>
+                    <td>${r.Total || "0.00"}</td>
+                    <td>${r.Detalle || "-"}</td>
+                </tr>
+            `;
+        });
+
+        html += `</tbody></table></div>`;
+    }
+
+    html += `</div>`;
+}
+
+/* ================================
+   SAT AREQUIPA
+================================ */
+
+if(resultadoArequipaGlobal && Array.isArray(resultadoArequipaGlobal.registros)){
+
+    html += `
+    <div class="card">
+        <div class="card-header">
+            <h3>🏔️ SAT Arequipa</h3>
+        </div>
+    `;
+
+    if(resultadoArequipaGlobal.registros.length === 0){
+
+        html += `
+            <div class="item">
+                <div class="value text-success">
+                    ✔ Sin papeletas registradas
+                </div>
+            </div>
+        `;
+
+    }else{
+
+        html += `
+        <table style="width:100%;border-collapse:collapse;">
+            <thead>
+                <tr>
+                    ${resultadoArequipaGlobal.encabezados
+                        .map(h => `<th>${h}</th>`)
+                        .join("")}
+                </tr>
+            </thead>
+            <tbody>
+        `;
+
+        resultadoArequipaGlobal.registros.forEach(row=>{
+            html += `
+                <tr>
+                    ${row.map(col => `<td>${col || "-"}</td>`).join("")}
+                </tr>
+            `;
+        });
+
+        html += `
+            </tbody>
+        </table>
+        `;
+    }
+
+    html += `</div>`;
+}
+
+/* ================================
+   SAT TARAPOTO
+================================ */
+
+if(resultadoTarapotoGlobal !== null){
+
+    html += `
+    <div class="card">
+        <div class="card-header">
+            <h3>🌴 SAT Tarapoto</h3>
+        </div>
+    `;
+
+    if(resultadoTarapotoGlobal === "error"){
+
+        html += `
+            <div class="item">
+                <div class="value text-danger">
+                    ❌ Error de conexión
+                </div>
+            </div>
+        `;
+
+    }else if(resultadoTarapotoGlobal.length === 0){
+
+        html += `
+            <div class="item">
+                <div class="value text-success">
+                    ✔ Sin papeletas registradas
+                </div>
+            </div>
+        `;
+
+    }else{
+
+        html += `
+        <table style="width:100%;border-collapse:collapse;">
+            <thead>
+                <tr>
+                    <th>Documento</th>
+                    <th>Fecha</th>
+                    <th>Monto</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+        `;
+
+        resultadoTarapotoGlobal.forEach(r=>{
+            html += `
+                <tr>
+                    <td>${r.documento || "-"}</td>
+                    <td>${r.fecha || "-"}</td>
+                    <td>${r.monto || "0.00"}</td>
+                    <td>${r.estado || "-"}</td>
+                </tr>
+            `;
+        });
+
+        html += `</tbody></table>`;
+    }
+
+    html += `</div>`;
+}
+
+
+/* ================================
+   SAT HUANCAYO
+================================ */
+
+if(resultadoHuancayoGlobal !== null){
+
+    html += `
+    <div class="card">
+        <div class="card-header">
+            <h3>⛰️ SAT Huancayo</h3>
+        </div>
+    `;
+
+    if(resultadoHuancayoGlobal === "error"){
+
+        html += `
+            <div class="item">
+                <div class="value text-danger">
+                    ❌ Error de conexión
+                </div>
+            </div>
+        `;
+
+    }else if(resultadoHuancayoGlobal.length === 0){
+
+        html += `
+            <div class="item">
+                <div class="value text-success">
+                    ✔ Sin papeletas registradas
+                </div>
+            </div>
+        `;
+
+    }else{
+
+        html += `
+        <table style="width:100%;border-collapse:collapse;">
+            <thead>
+                <tr>
+                    <th>Documento</th>
+                    <th>Fecha</th>
+                    <th>Monto</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+        `;
+
+        resultadoHuancayoGlobal.forEach(r=>{
+            html += `
+                <tr>
+                    <td>${r.documento || "-"}</td>
+                    <td>${r.fecha || "-"}</td>
+                    <td>${r.monto || "0.00"}</td>
+                    <td>${r.estado || "-"}</td>
+                </tr>
+            `;
+        });
+
+        html += `</tbody></table>`;
+    }
+
+    html += `</div>`;
+}
+
+
+if(resultadoChiclayoGlobal !== null){
+
+    html += `<div class="card"><div class="card-header">
+    <h3>☀️ SAT Chiclayo</h3></div>`;
+
+    if(resultadoChiclayoGlobal === "error"){
+        html += `<div class="item text-danger">❌ Error de conexión</div>`;
+    }
+    else if(Array.isArray(resultadoChiclayoGlobal)){
+        html += `<div class="item text-success">✔ Sin papeletas registradas</div>`;
+    }
+    else{
+        html += `<div class="tabla-container">${resultadoChiclayoGlobal.html}</div>`;
+    }
+
+    html += `</div>`;
+}
+
+if(resultadoHuanucoGlobal !== null){
+
+    html += `<div class="card"><div class="card-header">
+    <h3>🌄 SAT Huánuco</h3></div>`;
+
+    if(resultadoHuanucoGlobal === "error"){
+        html += `<div class="item text-danger">❌ Error de conexión</div>`;
+    }
+    else if(Array.isArray(resultadoHuanucoGlobal)){
+        html += `<div class="item text-success">✔ Sin papeletas registradas</div>`;
+    }
+    else{
+        html += `<div class="tabla-container">${resultadoHuanucoGlobal.html}</div>`;
+    }
+
+    html += `</div>`;
+}
+if(resultadoCajamarcaGlobal !== null){
+
+    html += `<div class="card"><div class="card-header">
+    <h3>🏔️ SAT Cajamarca</h3></div>`;
+
+    if(resultadoCajamarcaGlobal === "error"){
+        html += `<div class="item text-danger">❌ Error de conexión</div>`;
+    }
+    else if(Array.isArray(resultadoCajamarcaGlobal) && resultadoCajamarcaGlobal.length === 0){
+        html += `<div class="item text-success">✔ Sin papeletas registradas</div>`;
+    }
+    else{
+        resultadoCajamarcaGlobal.forEach(d=>{
+            html += `<div>${d.papeleta} - ${d.importe}</div>`;
+        });
+    }
+
+    html += `</div>`;
+}
+
+if(resultadoCuscoGlobal !== null){
+
+    html += `<div class="card"><div class="card-header">
+    <h3>🦙 SAT Cusco</h3></div>`;
+
+    if(resultadoCuscoGlobal === "error"){
+        html += `<div class="item text-danger">❌ Error de conexión</div>`;
+    }
+    else if(Array.isArray(resultadoCuscoGlobal)){
+        html += `<div class="item text-success">✔ Sin papeletas registradas</div>`;
+    }
+    else{
+        html += `<table><thead><tr>
+        ${resultadoCuscoGlobal.headers.map(h=>`<th>${h}</th>`).join("")}
+        </tr></thead><tbody>`;
+
+        resultadoCuscoGlobal.datos.forEach(row=>{
+            html += `<tr>
+            ${row.map(c=>`<td>${c}</td>`).join("")}
+            </tr>`;
+        });
+
+        html += `</tbody></table>`;
+    }
+
+    html += `</div>`;
+}
+if(resultadoIcaGlobal !== null){
+
+    html += `<div class="card"><div class="card-header">
+    <h3>🏜️ SAT Ica</h3></div>`;
+
+    if(resultadoIcaGlobal === "error"){
+        html += `<div class="item text-danger">❌ Error de conexión</div>`;
+    }
+    else if(Array.isArray(resultadoIcaGlobal)){
+        html += `<div class="item text-success">✔ Sin papeletas registradas</div>`;
+    }
+    else{
+        html += `<table><thead><tr>
+        ${resultadoIcaGlobal.headers.map(h=>`<th>${h}</th>`).join("")}
+        </tr></thead><tbody>`;
+
+        resultadoIcaGlobal.datos.forEach(row=>{
+            html += `<tr>
+            ${row.map(c=>`<td>${c}</td>`).join("")}
+            </tr>`;
+        });
+
+        html += `</tbody></table>`;
+    }
+
+    html += `</div>`;
+}
+
+if(resultadoAndahuaylasGlobal !== null){
+
+    html += `<div class="card"><div class="card-header">
+    <h3>🌄 SAT Andahuaylas</h3></div>`;
+
+    if(resultadoAndahuaylasGlobal === "error"){
+        html += `<div class="item text-danger">❌ Error de conexión</div>`;
+    }
+    else if(Array.isArray(resultadoAndahuaylasGlobal)){
+        html += `<div class="item text-success">✔ Sin papeletas registradas</div>`;
+    }
+    else{
+        html += `<div class="tabla-container">
+        ${resultadoAndahuaylasGlobal.html}
+        </div>`;
+    }
+
+    html += `</div>`;
+}
+if(resultadoChachapoyasGlobal !== null){
+
+    html += `<div class="card"><div class="card-header">
+    <h3>🌿 SAT Chachapoyas</h3></div>`;
+
+    if(resultadoChachapoyasGlobal === "error"){
+        html += `<div class="item text-danger">❌ Error de conexión</div>`;
+    }
+    else if(Array.isArray(resultadoChachapoyasGlobal)){
+        html += `<div class="item text-success">✔ Sin papeletas registradas</div>`;
+    }
+    else{
+        html += `<table><thead><tr>
+        ${resultadoChachapoyasGlobal.headers.map(h=>`<th>${h}</th>`).join("")}
+        </tr></thead><tbody>`;
+
+        resultadoChachapoyasGlobal.datos.forEach(row=>{
+            html += `<tr>
+            ${row.map(c=>`<td>${c}</td>`).join("")}
+            </tr>`;
+        });
+
+        html += `</tbody></table>`;
+    }
+
+    html += `</div>`;
+}
+if(resultadoPunoGlobal !== null){
+
+    html += `<div class="card"><div class="card-header">
+    <h3>🏛️ SAT Puno</h3></div>`;
+
+    if(resultadoPunoGlobal === "error"){
+        html += `<div class="item text-danger">❌ Error de conexión</div>`;
+    }
+    else if(Array.isArray(resultadoPunoGlobal)){
+        html += `<div class="item text-success">✔ Sin papeletas registradas</div>`;
+    }
+    else{
+        html += `<p><strong>Total detectado:</strong> S/ ${resultadoPunoGlobal.total.toFixed(2)}</p>`;
+    }
+
+    html += `</div>`;
+}
+
+if(resultadoTacnaGlobal !== null){
+
+    html += `<div class="card"><div class="card-header">
+    <h3>☀️ SAT Tacna</h3></div>`;
+
+    if(resultadoTacnaGlobal === "error"){
+        html += `<div class="item text-danger">❌ Error de conexión</div>`;
+    }
+    else if(Array.isArray(resultadoTacnaGlobal)){
+        html += `<div class="item text-success">✔ Sin papeletas registradas</div>`;
+    }
+    else{
+        html += `<p><strong>Total detectado:</strong> S/ ${resultadoTacnaGlobal.total.toFixed(2)}</p>`;
+    }
+
+    html += `</div>`;
+}
+
+if(resultadoPITGlobal !== null){
+
+    html += `<div class="card"><div class="card-header">
+    <h3>📸 Foto Papeletas (PIT)</h3></div>`;
+
+    if(resultadoPITGlobal === "error"){
+        html += `<div class="item text-danger">❌ Error de conexión</div>`;
+    }
+    else if(Array.isArray(resultadoPITGlobal)){
+        html += `<div class="item text-success">✔ Sin papeletas registradas</div>`;
+    }
+    else{
+        html += `<p><strong>${resultadoPITGlobal.datos.length}</strong> papeleta(s) detectada(s)</p>`;
+    }
+
+    html += `</div>`;
+}
+
+if(resultadoLunasGlobal !== null){
+
+    html += `<div class="card"><div class="card-header">
+    <h3>🚓 Permiso de Lunas Polarizadas (PNP)</h3></div>`;
+
+    if(resultadoLunasGlobal === "error"){
+        html += `<div class="item text-danger">❌ Error de conexión</div>`;
+    }
+    else if(Array.isArray(resultadoLunasGlobal)){
+        html += `<div class="item text-success">✔ No se encontró permiso registrado</div>`;
+    }
+    else{
+        html += `<div class="tabla-container">
+        ${resultadoLunasGlobal.html}
+        </div>`;
+    }
+
+    html += `</div>`;
+}
+
+    html += `
+            </div>
+
+            <div class="footer">
+                © ${new Date().getFullYear()} Consulta Vehicular | Documento generado automáticamente
+            </div>
+
+        </div>
+
+    </body>
+    </html>
+    `;
+
+    const ventana = window.open("", "_blank");
+    ventana.document.write(html);
+    ventana.document.close();
+}
+
+
+
+async function consultarLunas(placa){
+
+    
+    const resultadoDiv = document.getElementById("resultadosConsultas");
+
+    if(!placa){
+        resultadoDiv.innerHTML = `
+            <div class="bg-red-100 text-red-700 p-4 rounded-lg font-semibold">
+                ❌ Ingrese una placa
+            </div>
+        `;
+        return;
+    }
+
+    // 🔄 Loader
+    resultadoDiv.innerHTML = `
+        <div class="flex items-center justify-center py-10">
+            <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600"></div>
+            <span class="ml-3 text-gray-600 font-medium">
+                Consultando en base oficial PNP...
+            </span>
+        </div>
+    `;
+resultadoLunasGlobal = null;
+    try{
+ 
+        const response = await fetch("https://www.consultavehicular.services/consultar-lunas", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ placa })
+        });
+
+        const data = await response.json();
+
+        if(!response.ok){
+            throw new Error(data.error || "Error servidor");
+        }
+
+        if(data.success){
+resultadoLunasGlobal = {
+    html: data.data
+};
+            // 🔥 Renderiza el HTML que envía Puppeteer
+            resultadoDiv.innerHTML = `
+                <div class="flex justify-center">
+                    ${data.data}
+                </div>
+            `;
+
+        }else{
+            throw new Error("No se encontró información");
+        }
+
+    }catch(error){
+
+        resultadoDiv.innerHTML = `
+            <div class="bg-red-100 text-red-700 p-4 rounded-lg font-semibold text-center">
+                ❌ Error al consultar permiso de lunas
+            </div>
+        `;
+    }
+}
+
+
+
+ 
+</script>
+</body>
+</html>
